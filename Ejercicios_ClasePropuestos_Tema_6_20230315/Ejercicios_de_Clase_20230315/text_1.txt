@@ -1,0 +1,6 @@
+Esto es una prueba de un fichero tipo texto
+Linea 1
+Linea 2
+Línea 3
+Línea 4
+Línea 5
