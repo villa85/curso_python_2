@@ -20,14 +20,15 @@ else:
 print(f"Directorio de Trabajo se cambio a: {os.getcwd()}")
 
 
-# file_name = "data\\yelp_academic_dataset_business.json"
+file_name = "data\\yelp_academic_dataset_business.json"
 # file_name = "recipes.json"
-file_name = "data\\pokedex.json"
+# file_name = "data\\pokedex.json"
 
 with open(file_name, "r", encoding = "utf-8") as file:
-    my_file = file.readlines()
+    my_file = file.readlines(100000)
     mis_datos = []
     for linea in my_file:
         mis_datos.append(json.loads(linea))
-
-print(mis_datos)
+    for l in mis_datos:
+        if l["state"] == "NV":
+            print(f"{l['state']}, {l['name']}, {l['address']}, {l['city']}, {l['state']}, {l['attributes']},")
