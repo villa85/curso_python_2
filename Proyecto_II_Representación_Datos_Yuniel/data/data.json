@@ -84,18 +84,18 @@
         "url": "https://music.apple.com/us/album/show-me-how-to-live/208294748?i=208294773&uo=4"
     },
     {
-        "nombre": "Cochise",
-        "cantante": "Audioslave",
-        "genero": "Hard Rock",
-        "album": "Audioslave",
-        "url": "https://music.apple.com/us/album/cochise/208294748?i=208294752&uo=4"
-    },
-    {
         "nombre": "I Am the Highway",
         "cantante": "Audioslave",
         "genero": "Hard Rock",
         "album": "Audioslave",
         "url": "https://music.apple.com/us/album/i-am-the-highway/208294748?i=208294980&uo=4"
+    },
+    {
+        "nombre": "Cochise",
+        "cantante": "Audioslave",
+        "genero": "Hard Rock",
+        "album": "Audioslave",
+        "url": "https://music.apple.com/us/album/cochise/208294748?i=208294752&uo=4"
     },
     {
         "nombre": "Shadow On the Sun",
@@ -168,11 +168,11 @@
         "url": "https://music.apple.com/us/album/madness/563015686?i=563015717&uo=4"
     },
     {
-        "nombre": "Muse: A novel (Unabridged)",
-        "cantante": "Jonathan Galassi",
-        "genero": "Fiction",
-        "album": "Muse: A novel (Unabridged)",
-        "url": null
+        "nombre": "Good morning, Muse (feat. SF-A2 miki)",
+        "cantante": "Plutonius(hayakawaP)",
+        "genero": "Pop",
+        "album": "The Flying Classroom",
+        "url": "https://music.apple.com/us/album/good-morning-muse-feat-sf-a2-miki/528211136?i=528211140&uo=4"
     },
     {
         "nombre": "Clint Eastwood",
@@ -203,11 +203,11 @@
         "url": "https://music.apple.com/us/album/rock-the-house/850576570?i=850576694&uo=4"
     },
     {
-        "nombre": "19-2000 (Soulchild Remix)",
+        "nombre": "Slow Country",
         "cantante": "Gorillaz",
         "genero": "Alternative",
         "album": "Gorillaz",
-        "url": "https://music.apple.com/us/album/19-2000-soulchild-remix/850576570?i=850576766&uo=4"
+        "url": "https://music.apple.com/us/album/slow-country/850576570?i=850576712&uo=4"
     },
     {
         "nombre": "Deutschland",
@@ -224,18 +224,18 @@
         "url": "https://music.apple.com/us/album/ausl%C3%A4nder/1456789831?i=1456790081&uo=4"
     },
     {
-        "nombre": "Radio",
-        "cantante": "Rammstein",
-        "genero": "Rock",
-        "album": "Rammstein",
-        "url": "https://music.apple.com/us/album/radio/1456789831?i=1456790073&uo=4"
-    },
-    {
         "nombre": "Weit weg",
         "cantante": "Rammstein",
         "genero": "Rock",
         "album": "Rammstein",
         "url": "https://music.apple.com/us/album/weit-weg/1456789831?i=1456790192&uo=4"
+    },
+    {
+        "nombre": "Radio",
+        "cantante": "Rammstein",
+        "genero": "Rock",
+        "album": "Rammstein",
+        "url": "https://music.apple.com/us/album/radio/1456789831?i=1456790073&uo=4"
     },
     {
         "nombre": "Tattoo",
@@ -273,11 +273,11 @@
         "url": "https://music.apple.com/us/album/scream/266023781?i=266024261&uo=4"
     },
     {
-        "nombre": "Gunslinger",
+        "nombre": "Dear God",
         "cantante": "Avenged Sevenfold",
         "genero": "Hard Rock",
         "album": "Avenged Sevenfold (Bonus Track Version)",
-        "url": "https://music.apple.com/us/album/gunslinger/266023781?i=266024398&uo=4"
+        "url": "https://music.apple.com/us/album/dear-god/266023781?i=266025462&uo=4"
     },
     {
         "nombre": "Limp Bizkit",
@@ -308,10 +308,10 @@
         "url": "https://music.apple.com/us/album/limp-bizkit-feat-jay-espi/1551830856?i=1551830862&uo=4"
     },
     {
-        "nombre": "Limp Bizkit!",
-        "cantante": "LilWoah",
-        "genero": "Hip-Hop/Rap",
-        "album": "Lil Woah - EP",
-        "url": "https://music.apple.com/us/album/limp-bizkit/1505215108?i=1505215110&uo=4"
+        "nombre": "Limp Bizkit",
+        "cantante": "DELTA ARTHUR",
+        "genero": "Alternative",
+        "album": "Tutaev, Pt. 2",
+        "url": "https://music.apple.com/us/album/limp-bizkit/1481177454?i=1481177642&uo=4"
     }
 ]
