@@ -108,3 +108,24 @@ def une_listas(l):
                     p +=1
         c -= 1
     return l
+
+class PlayList:
+
+    def __init__(self, nombre, usuario, canciones):
+        self.name = nombre
+        self.user = usuario
+        self.songs = canciones
+
+    def crearplaylist (self):
+        client = conexion_BD()
+        db = client.MusicPlayList
+        playlist = ([{
+            "nombre":self.name,
+            "username":self.user,
+            "canciones":[self.songs]
+            }])
+        db.playlist.insert_many(playlist)
+
+p = PlayList("Rock", "admin", ["643092a5bebfed10abb4e4ef", "643092a5bebfed10abb4e4f0", "643092a5bebfed10abb4e4f2",
+                                "643092a5bebfed10abb4e4f3", "643092a5bebfed10abb4e4f4"])
+p.crearplaylist()
