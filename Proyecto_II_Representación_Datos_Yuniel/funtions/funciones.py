@@ -1,6 +1,7 @@
 import json
 import requests
 import pymongo
+import random
 
 def conexion_BD():
     client = pymongo.MongoClient("mongodb://localhost:27017")
@@ -77,6 +78,32 @@ def crear_json_canciones():
     with open(file_name, 'w') as file:
         json.dump(d, file, indent=4)
 
+def lista_canciones():
+    l = []
+    client = conexion_BD()
+    db = client.MusicPlayList
+    cursor = db.canciones.find()
+    for i in cursor:
+        l.append(str(i["_id"]))
+    return l
+
+def list_random_music(lista, cant = 20): # Una lista de canciones aletorias con cantidad predefinida
+    l = random.SystemRandom().sample(lista, cant)
+    return l
+
+# def mostrar_sugerencias(lista):
+#     l
+#     client = conexion_BD()
+#     db = client.MusicPlayList
+#     for i in lista:
+#         cursor = db.canciones.find({"_id": i})
+#         if cursor:
+
+
+p = lista_canciones()
+d = list_random_music(p, 4)
+
+print(d)
 
 def crear_user(nombre, apellido, usuario, email):
     client = conexion_BD()
@@ -126,6 +153,6 @@ class PlayList:
             }])
         db.playlist.insert_many(playlist)
 
-p = PlayList("Rock", "admin", ["643092a5bebfed10abb4e4ef", "643092a5bebfed10abb4e4f0", "643092a5bebfed10abb4e4f2",
-                                "643092a5bebfed10abb4e4f3", "643092a5bebfed10abb4e4f4"])
-p.crearplaylist()
+# p = PlayList("Rock", "admin", ["643092a5bebfed10abb4e4ef", "643092a5bebfed10abb4e4f0", "643092a5bebfed10abb4e4f2",
+#                                 "643092a5bebfed10abb4e4f3", "643092a5bebfed10abb4e4f4"])
+# p.crearplaylist()
