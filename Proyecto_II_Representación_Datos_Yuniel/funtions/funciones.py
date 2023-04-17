@@ -2,6 +2,7 @@ import json
 import requests
 import pymongo
 import random
+from tabulate import tabulate
 
 def conexion_BD():
     client = pymongo.MongoClient("mongodb://localhost:27017")
@@ -84,26 +85,36 @@ def lista_canciones():
     db = client.MusicPlayList
     cursor = db.canciones.find()
     for i in cursor:
-        l.append(str(i["_id"]))
+        l.append(i["_id"])
+        # l.append(str(i["_id"]))
     return l
 
 def list_random_music(lista, cant = 20): # Una lista de canciones aletorias con cantidad predefinida
     l = random.SystemRandom().sample(lista, cant)
     return l
 
-# def mostrar_sugerencias(lista):
-#     l
-#     client = conexion_BD()
-#     db = client.MusicPlayList
-#     for i in lista:
-#         cursor = db.canciones.find({"_id": i})
-#         if cursor:
+def mostrar_sugerencias(lista):
+    l = []
+    client = conexion_BD()
+    db = client.MusicPlayList
+    for i in lista:
+        cursor = db.canciones.find({"_id": i})
+        if cursor:
+            for j in cursor:
+                t = j["nombre"], j["cantante"], i
+                l.append(t)
+    return l
+
 
 
 p = lista_canciones()
-d = list_random_music(p, 4)
+d = list_random_music(p)
+m = mostrar_sugerencias(d)
 
-print(d)
+e = list(enumerate(m, start=1))
+print(tabulate(e, headers=['Número', 'Canción / Banda Rock / Id']))
+
+# print(len(m))
 
 def crear_user(nombre, apellido, usuario, email):
     client = conexion_BD()
