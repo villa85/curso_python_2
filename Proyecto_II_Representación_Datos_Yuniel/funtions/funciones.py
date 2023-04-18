@@ -1,3 +1,4 @@
+import os
 import json
 import requests
 import pymongo
@@ -14,16 +15,20 @@ def extrutura_BD():
     l = db.list_collection_names()
     if "usuario" not in l:
         db.create_collection("usuario")
+        print("Colección usuario creado con exito")
     else:
         print("La colección usuario ya existe")
     if "playlist" not in l:
         db.create_collection("playlist")
+        print("Colección usuario creado con exito")
     else:
         print("La colección playlist ya existe")
     if "canciones" not in l:
         db.create_collection("canciones")
+        print("Colección usuario creado con exito")
     else:
         print("La colección canciones ya existe")
+        print("\n")
 
 def une_listas(l):
     p = 0
@@ -75,11 +80,13 @@ def crear_json_canciones():
             }
         d.append(x)
 
-    file_name = "data\\data.json"
+    file_name = "data.json"
     with open(file_name, 'w') as file:
         json.dump(d, file, indent=4)
+    print(f'Archivo "{file_name}" creado con exito en el directorio de trabajo: {os.getcwd()}')
+    print("\n")
 
-def lista_canciones():
+def lista_canciones(): # Una lista de todas las canciones (_ids)
     l = []
     client = conexion_BD()
     db = client.MusicPlayList
@@ -89,11 +96,11 @@ def lista_canciones():
         # l.append(str(i["_id"]))
     return l
 
-def list_random_music(lista, cant = 20): # Una lista de canciones aletorias con cantidad predefinida
+def list_random_music(lista, cant = 20): # Una lista de canciones aletorias con cantidad predefinida (_ids)
     l = random.SystemRandom().sample(lista, cant)
     return l
 
-def mostrar_sugerencias(lista):
+def mostrar_sugerencias(lista): # Una lista de canciones aletorias con (nombre, grupo, id)
     l = []
     client = conexion_BD()
     db = client.MusicPlayList
@@ -112,7 +119,7 @@ d = list_random_music(p)
 m = mostrar_sugerencias(d)
 
 e = list(enumerate(m, start=1))
-print(tabulate(e, headers=['Número', 'Canción / Banda Rock / Id']))
+# print(tabulate(e, headers=['Número', 'Canción / Banda Rock / Id']))
 
 # print(len(m))
 
@@ -164,6 +171,18 @@ class PlayList:
             }])
         db.playlist.insert_many(playlist)
 
-# p = PlayList("Rock", "admin", ["643092a5bebfed10abb4e4ef", "643092a5bebfed10abb4e4f0", "643092a5bebfed10abb4e4f2",
-#                                 "643092a5bebfed10abb4e4f3", "643092a5bebfed10abb4e4f4"])
-# p.crearplaylist()
+def if_integer(string):
+
+    if string[0] == ('-', '+'):
+        return string[1:].isdigit()
+
+    else:
+        return string.isdigit()
+
+# string1 = '132'
+# string2 = '-132'
+# string3 = 'abc'
+
+# print(if_integer(string1))
+# print(if_integer(string2))
+# print(if_integer(string3))

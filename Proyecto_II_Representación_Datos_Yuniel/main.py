@@ -1,8 +1,33 @@
+
 from funtions import funciones as f
 
-f.extrutura_BD()
-f.crear_json_canciones()
-f.crear_user("Yuniel", "Villalón", "admin", "villalon2511@gmail.com")
+if __name__ == '__main__':
+    print("\n")
+    print('Proyecto "MusicPlayList en MongoDB" por Yuniel Villalón.', end= "\n\n")
+    print('Elija la "tarea" a realizar, escribiendo el Número correspondiente o fin para terminar.', end= "\n\n")
+    print('1- Crear estrutura de la base de datos', end= "\n")
+    print('2- Generar archivo Json de canciones', end= "\n")
+    print('3- Crear Usuario', end= "\n\n")
+
+    opcion = "0"
+
+    while opcion.lower() != "fin":
+        opcion = input("Escriba la opción deseada o fin para salir: ")
+        print("\n")
+        if opcion == "1":
+            f.extrutura_BD()
+        elif opcion == "2":
+            f.crear_json_canciones()
+        elif opcion != "fin" and f.if_integer(opcion) and int(opcion) not in range(1,2) or opcion != "fin" and not f.if_integer(opcion):
+                print('Opción no válida, Por favor Introduzca un número del (1-8) o "fin" para salir')
+                print("\n")
+    else:
+        print("Muchas Gracias, nos vemos pronto")
+
+
+    # f.extrutura_BD()
+    # f.crear_json_canciones()
+    # f.crear_user("Yuniel", "Villalón", "admin", "villalon2511@gmail.com")
 
 
 

@@ -84,18 +84,18 @@
         "url": "https://music.apple.com/us/album/show-me-how-to-live/208294748?i=208294773&uo=4"
     },
     {
-        "nombre": "Cochise",
-        "cantante": "Audioslave",
-        "genero": "Hard Rock",
-        "album": "Audioslave",
-        "url": "https://music.apple.com/us/album/cochise/208294748?i=208294752&uo=4"
-    },
-    {
         "nombre": "I Am the Highway",
         "cantante": "Audioslave",
         "genero": "Hard Rock",
         "album": "Audioslave",
         "url": "https://music.apple.com/us/album/i-am-the-highway/208294748?i=208294980&uo=4"
+    },
+    {
+        "nombre": "Cochise",
+        "cantante": "Audioslave",
+        "genero": "Hard Rock",
+        "album": "Audioslave",
+        "url": "https://music.apple.com/us/album/cochise/208294748?i=208294752&uo=4"
     },
     {
         "nombre": "Shadow On the Sun",
@@ -141,6 +141,13 @@
     },
     {
         "nombre": "Muse",
+        "cantante": "OCAD",
+        "genero": "Hip-Hop/Rap",
+        "album": "Muse - Single",
+        "url": "https://music.apple.com/us/album/muse/657588776?i=657589141&uo=4"
+    },
+    {
+        "nombre": "Muse",
         "cantante": "Endeavour",
         "genero": "Drama",
         "album": "Endeavour, Season 5",
@@ -154,25 +161,18 @@
         "url": null
     },
     {
+        "nombre": "Muse",
+        "cantante": "OCAD",
+        "genero": "Hip-Hop/Rap",
+        "album": "The Truth",
+        "url": "https://music.apple.com/us/album/muse/662323771?i=662324051&uo=4"
+    },
+    {
         "nombre": "Muse (feat. Adina Butar)",
         "cantante": "Markus Schulz",
         "genero": "Dance",
         "album": "Scream 2",
         "url": "https://music.apple.com/us/album/muse-feat-adina-butar/804757478?i=804757567&uo=4"
-    },
-    {
-        "nombre": "Madness",
-        "cantante": "Muse",
-        "genero": "Alternative",
-        "album": "The 2nd Law (Deluxe Version)",
-        "url": "https://music.apple.com/us/album/madness/563015686?i=563015717&uo=4"
-    },
-    {
-        "nombre": "Good morning, Muse (feat. SF-A2 miki)",
-        "cantante": "Plutonius(hayakawaP)",
-        "genero": "Pop",
-        "album": "The Flying Classroom",
-        "url": "https://music.apple.com/us/album/good-morning-muse-feat-sf-a2-miki/528211136?i=528211140&uo=4"
     },
     {
         "nombre": "Clint Eastwood",
@@ -203,11 +203,11 @@
         "url": "https://music.apple.com/us/album/rock-the-house/850576570?i=850576694&uo=4"
     },
     {
-        "nombre": "5/4",
+        "nombre": "19-2000 (Soulchild Remix)",
         "cantante": "Gorillaz",
         "genero": "Alternative",
         "album": "Gorillaz",
-        "url": "https://music.apple.com/us/album/5-4/850576570?i=850576657&uo=4"
+        "url": "https://music.apple.com/us/album/19-2000-soulchild-remix/850576570?i=850576766&uo=4"
     },
     {
         "nombre": "Deutschland",
