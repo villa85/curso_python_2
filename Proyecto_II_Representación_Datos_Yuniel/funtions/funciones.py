@@ -173,7 +173,7 @@ class PlayList:
 
 def if_integer(string):
 
-    if string[0] == ('-', '+'):
+    if string[0] == ('+'):
         return string[1:].isdigit()
 
     else:
