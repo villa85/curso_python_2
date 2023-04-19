@@ -18,11 +18,17 @@ if __name__ == '__main__':
             f.extrutura_BD()
         elif opcion == "2":
             f.crear_json_canciones()
+        elif opcion == "3":
+            nombre = input("Ingrese el Nombre: ")
+            if nombre.isalpha():
+                print("Hola")
+            else:
+                print("Error")
         elif opcion != "fin" and f.if_integer(opcion) and int(opcion) not in range(1,2) or opcion != "fin" and not f.if_integer(opcion):
                 print('Opción no válida, Por favor Introduzca un número del (1-8) o "fin" para salir')
                 print("\n")
     else:
-        print("Muchas Gracias, nos vemos pronto")
+        print("Muchas Gracias")
 
 
     # f.extrutura_BD()

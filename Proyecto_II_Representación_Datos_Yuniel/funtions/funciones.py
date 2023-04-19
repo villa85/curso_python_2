@@ -15,6 +15,7 @@ def extrutura_BD():
     l = db.list_collection_names()
     if "usuario" not in l:
         db.create_collection("usuario")
+        print("La Base de Datos MusicPlayList ha sido creada exitosamente")
         print("Colección usuario creado con exito")
     else:
         print("La colección usuario ya existe")
@@ -93,7 +94,6 @@ def lista_canciones(): # Una lista de todas las canciones (_ids)
     cursor = db.canciones.find()
     for i in cursor:
         l.append(i["_id"])
-        # l.append(str(i["_id"]))
     return l
 
 def list_random_music(lista, cant = 20): # Una lista de canciones aletorias con cantidad predefinida (_ids)
@@ -108,7 +108,7 @@ def mostrar_sugerencias(lista): # Una lista de canciones aletorias con (nombre, 
         cursor = db.canciones.find({"_id": i})
         if cursor:
             for j in cursor:
-                t = j["nombre"], j["cantante"], i
+                t = j["nombre"], j["cantante"]
                 l.append(t)
     return l
 
@@ -118,10 +118,35 @@ p = lista_canciones()
 d = list_random_music(p)
 m = mostrar_sugerencias(d)
 
-e = list(enumerate(m, start=1))
-# print(tabulate(e, headers=['Número', 'Canción / Banda Rock / Id']))
+# print(d)
 
-# print(len(m))
+# e = list(enumerate(m, start=1))
+# print(tabulate(e, headers=['Número', 'Nombre Canción  -  Banda Rock']))
+
+# # print(len(m))
+
+def valida_user():
+    l = []
+    name = ""
+    last_name = ""
+    while not name.isalpha():
+        print("Por favor introduzca un nombre válido (Solo Letras)")
+        name = input("Introduzca nombre: ")
+    else:
+        n = name.capitalize()
+        l.append(n)
+    while not last_name.isalpha():
+        print("Por favor introduzca un apellido válido (Solo Letras)")
+        last_name = input("Introduzca apellido: ")
+    else:
+        a = last_name.capitalize()
+        l.append(a)
+    return l
+    # last_name = input("Introduzca primer apellido: ")
+    # user_name = input("Introduzca usuario: ")
+    # email = input("Introduzca un correo válido: ")
+p = valida_user()
+print(p)
 
 def crear_user(nombre, apellido, usuario, email):
     client = conexion_BD()
