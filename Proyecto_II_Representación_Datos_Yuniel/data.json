@@ -84,18 +84,18 @@
         "url": "https://music.apple.com/us/album/show-me-how-to-live/208294748?i=208294773&uo=4"
     },
     {
-        "nombre": "I Am the Highway",
-        "cantante": "Audioslave",
-        "genero": "Hard Rock",
-        "album": "Audioslave",
-        "url": "https://music.apple.com/us/album/i-am-the-highway/208294748?i=208294980&uo=4"
-    },
-    {
         "nombre": "Cochise",
         "cantante": "Audioslave",
         "genero": "Hard Rock",
         "album": "Audioslave",
         "url": "https://music.apple.com/us/album/cochise/208294748?i=208294752&uo=4"
+    },
+    {
+        "nombre": "I Am the Highway",
+        "cantante": "Audioslave",
+        "genero": "Hard Rock",
+        "album": "Audioslave",
+        "url": "https://music.apple.com/us/album/i-am-the-highway/208294748?i=208294980&uo=4"
     },
     {
         "nombre": "Shadow On the Sun",

@@ -19,21 +19,14 @@ if __name__ == '__main__':
         elif opcion == "2":
             f.crear_json_canciones()
         elif opcion == "3":
-            nombre = input("Ingrese el Nombre: ")
-            if nombre.isalpha():
-                print("Hola")
-            else:
-                print("Error")
+            l = f.valida_user()
+            f.crear_user(l[0],l[1],l[2],l[3])
         elif opcion != "fin" and f.if_integer(opcion) and int(opcion) not in range(1,2) or opcion != "fin" and not f.if_integer(opcion):
                 print('Opción no válida, Por favor Introduzca un número del (1-8) o "fin" para salir')
                 print("\n")
     else:
         print("Muchas Gracias")
 
-
-    # f.extrutura_BD()
-    # f.crear_json_canciones()
-    # f.crear_user("Yuniel", "Villalón", "admin", "villalon2511@gmail.com")
 
 
 

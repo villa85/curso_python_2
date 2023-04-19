@@ -3,6 +3,7 @@ import json
 import requests
 import pymongo
 import random
+import re
 from tabulate import tabulate
 
 def conexion_BD():
@@ -124,29 +125,55 @@ m = mostrar_sugerencias(d)
 # print(tabulate(e, headers=['Número', 'Nombre Canción  -  Banda Rock']))
 
 # # print(len(m))
+def es_correo_valido(correo):
+    expresion_regular = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"
+    return re.match(expresion_regular, correo) is not None
 
 def valida_user():
     l = []
     name = ""
     last_name = ""
-    while not name.isalpha():
+    user_name = ""
+    email = ""
+    while not name.isalpha() or not name:
         print("Por favor introduzca un nombre válido (Solo Letras)")
         name = input("Introduzca nombre: ")
     else:
         n = name.capitalize()
         l.append(n)
-    while not last_name.isalpha():
+    while not last_name.isalpha() or not last_name:
         print("Por favor introduzca un apellido válido (Solo Letras)")
         last_name = input("Introduzca apellido: ")
     else:
         a = last_name.capitalize()
         l.append(a)
+    while not user_name.isalnum() or not user_name:
+        print("Por favor username válido (Sin signos de puntuación)")
+        user_name = input("Introduzca username: ")
+    else:
+        l.append(valida_user_name(user_name))
+    while not es_correo_valido(email) or not email:
+        print("Por favor introduzca un correo válido")
+        email = input("Introduzca dirección de correo: ")
+    else:
+        l.append(email)
     return l
-    # last_name = input("Introduzca primer apellido: ")
-    # user_name = input("Introduzca usuario: ")
-    # email = input("Introduzca un correo válido: ")
-p = valida_user()
-print(p)
+
+def valida_user_name(usuario):
+    client = conexion_BD()
+    db = client.MusicPlayList
+    cursor = db.usuario.find_one({"username":usuario})
+    user_name = ""
+    if cursor is None:
+        return usuario
+    else:
+        print("\n")
+        print(f"Ya existe un usuario ({usuario}) ")
+        print("Por favor inténte con otro username")
+        while not user_name.isalnum() or not user_name:
+            print("Por favor username válido (Sin signos de puntuación)")
+            user_name = input("Introduzca username: ")
+        return user_name
 
 def crear_user(nombre, apellido, usuario, email):
     client = conexion_BD()
@@ -161,8 +188,13 @@ def crear_user(nombre, apellido, usuario, email):
 
             }])
         db.usuario.insert_many(user)
+        print("\n")
+        print("Usuario creado con exito")
+        print("\n")
     else:
-        print("El usuario ya existe...")
+        print("\n")
+        print(f"Ya existe un usuario ({usuario}) ")
+        print("Por favor inténte con otro username")
 
 def une_listas(l):
     p = 0
@@ -203,11 +235,3 @@ def if_integer(string):
 
     else:
         return string.isdigit()
-
-# string1 = '132'
-# string2 = '-132'
-# string3 = 'abc'
-
-# print(if_integer(string1))
-# print(if_integer(string2))
-# print(if_integer(string3))
