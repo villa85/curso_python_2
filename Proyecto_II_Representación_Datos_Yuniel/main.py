@@ -1,4 +1,4 @@
-
+from tabulate import tabulate
 from funtions import funciones as f
 
 if __name__ == '__main__':
@@ -7,7 +7,8 @@ if __name__ == '__main__':
     print('Elija la "tarea" a realizar, escribiendo el Número correspondiente o fin para terminar.', end= "\n\n")
     print('1- Crear estrutura de la base de datos', end= "\n")
     print('2- Generar archivo Json de canciones', end= "\n")
-    print('3- Crear Usuario', end= "\n\n")
+    print('3- Crear Usuario', end= "\n")
+    print('4- Mostrar sugencias de canciones', end= "\n\n")
 
     opcion = "0"
 
@@ -21,6 +22,13 @@ if __name__ == '__main__':
         elif opcion == "3":
             l = f.valida_user()
             f.crear_user(l[0],l[1],l[2],l[3])
+        elif opcion == "4":
+            twenty_random_songs = f.lista_canciones()
+            l = f.mostrar_sugerencias(twenty_random_songs)
+            # s = f.PlayList()
+            e = list(enumerate(l, start=1))
+            print(tabulate(e, headers=['Número', 'Nombre Canción  -  Banda Rock']))
+            print("\n")
         elif opcion != "fin" and f.if_integer(opcion) and int(opcion) not in range(1,2) or opcion != "fin" and not f.if_integer(opcion):
                 print('Opción no válida, Por favor Introduzca un número del (1-8) o "fin" para salir')
                 print("\n")

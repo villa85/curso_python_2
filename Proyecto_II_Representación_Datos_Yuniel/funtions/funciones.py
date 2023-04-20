@@ -88,17 +88,15 @@ def crear_json_canciones():
     print(f'Archivo "{file_name}" creado con exito en el directorio de trabajo: {os.getcwd()}')
     print("\n")
 
-def lista_canciones(): # Una lista de todas las canciones (_ids)
+def lista_canciones(cant = 20): # Una lista de 20 las canciones aletorias (_ids)
     l = []
+    n = []
     client = conexion_BD()
     db = client.MusicPlayList
     cursor = db.canciones.find()
     for i in cursor:
         l.append(i["_id"])
-    return l
-
-def list_random_music(lista, cant = 20): # Una lista de canciones aletorias con cantidad predefinida (_ids)
-    l = random.SystemRandom().sample(lista, cant)
+    l = random.SystemRandom().sample(l, cant)
     return l
 
 def mostrar_sugerencias(lista): # Una lista de canciones aletorias con (nombre, grupo, id)
@@ -112,12 +110,15 @@ def mostrar_sugerencias(lista): # Una lista de canciones aletorias con (nombre, 
                 t = j["nombre"], j["cantante"]
                 l.append(t)
     return l
+    # e = list(enumerate(l, start=1))
+    # print(tabulate(e, headers=['Número', 'Nombre Canción  -  Banda Rock']))
+    # print("\n")
 
 
 
-p = lista_canciones()
-d = list_random_music(p)
-m = mostrar_sugerencias(d)
+# p = lista_canciones()
+# d = list_random_music(p)
+# m = mostrar_sugerencias(d)
 
 # print(d)
 
@@ -211,12 +212,26 @@ def une_listas(l):
         c -= 1
     return l
 
-class PlayList:
+class PlayList(object):
 
     def __init__(self, nombre, usuario, canciones):
         self.name = nombre
         self.user = usuario
         self.songs = canciones
+
+    @classmethod
+    def mostrar_sugerencias(*argv): # Una lista de canciones aletorias con (nombre, grupo, id)
+        lista = argv
+        l = []
+        client = conexion_BD()
+        db = client.MusicPlayList
+        for i in lista:
+            cursor = db.canciones.find({"_id": i})
+            if cursor:
+                for j in cursor:
+                    t = j["nombre"], j["cantante"]
+                    l.append(t)
+        return l
 
     def crearplaylist (self):
         client = conexion_BD()
@@ -227,6 +242,8 @@ class PlayList:
             "canciones":[self.songs]
             }])
         db.playlist.insert_many(playlist)
+
+
 
 def if_integer(string):
 
