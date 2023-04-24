@@ -88,7 +88,7 @@ def crear_json_canciones():
     print(f'Archivo "{file_name}" creado con exito en el directorio de trabajo: {os.getcwd()}')
     print("\n")
 
-def lista_canciones(cant = 20): # Una lista de 20 las canciones aletorias (_ids)
+def lista_canciones(cant = 20): # Una lista de 20 las canciones aleatorias (_ids)
     l = []
     n = []
     client = conexion_BD()
@@ -110,22 +110,7 @@ def mostrar_sugerencias(lista): # Una lista de canciones aletorias con (nombre, 
                 t = j["nombre"], j["cantante"]
                 l.append(t)
     return l
-    # e = list(enumerate(l, start=1))
-    # print(tabulate(e, headers=['Número', 'Nombre Canción  -  Banda Rock']))
-    # print("\n")
 
-
-
-# p = lista_canciones()
-# d = list_random_music(p)
-# m = mostrar_sugerencias(d)
-
-# print(d)
-
-# e = list(enumerate(m, start=1))
-# print(tabulate(e, headers=['Número', 'Nombre Canción  -  Banda Rock']))
-
-# # print(len(m))
 def es_correo_valido(correo):
     expresion_regular = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"
     return re.match(expresion_regular, correo) is not None
@@ -212,6 +197,8 @@ def une_listas(l):
         c -= 1
     return l
 
+def valida_playlist():
+
 class PlayList(object):
 
     def __init__(self, nombre, usuario, canciones):
@@ -219,19 +206,21 @@ class PlayList(object):
         self.user = usuario
         self.songs = canciones
 
-    @classmethod
-    def mostrar_sugerencias(*argv): # Una lista de canciones aletorias con (nombre, grupo, id)
-        lista = argv
+
+    def mostrar_sugerencias(self): # Una lista de canciones aletorias con (nombre, grupo, id)
         l = []
         client = conexion_BD()
         db = client.MusicPlayList
-        for i in lista:
+        for i in self.songs:
             cursor = db.canciones.find({"_id": i})
             if cursor:
                 for j in cursor:
                     t = j["nombre"], j["cantante"]
                     l.append(t)
-        return l
+        l = list(enumerate(l, start=1))
+        print(tabulate(l, headers=['Número', 'Nombre Canción  -  Banda Rock']))
+        print("\n")
+        # return l
 
     def crearplaylist (self):
         client = conexion_BD()
