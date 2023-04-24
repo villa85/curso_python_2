@@ -26,6 +26,10 @@ if __name__ == '__main__':
             twenty_random_songs = f.lista_canciones()
             s = f.PlayList("PlayListGeneral", "admin", twenty_random_songs)
             s.mostrar_sugerencias()
+        elif opcion == "5":
+            twenty_random_songs = f.lista_canciones()
+            s = f.PlayList("PlayListGeneral", "admin", twenty_random_songs)
+            s.mostrar_sugerencias()
         elif opcion != "fin" and f.if_integer(opcion) and int(opcion) not in range(1,4) or opcion != "fin" and not f.if_integer(opcion):
                 print('Opción no válida, Por favor Introduzca un número del (1-8) o "fin" para salir')
                 print("\n")

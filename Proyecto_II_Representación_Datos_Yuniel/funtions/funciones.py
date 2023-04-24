@@ -47,6 +47,10 @@ def une_listas(l):
         c -= 1
     return l
 
+def if_integer(string):
+        return string.isdigit()
+
+
 def crear_json_canciones():
 
     l = ['https://itunes.apple.com/search?term=System+of+a+Down&limit=5',
@@ -145,14 +149,14 @@ def valida_user():
         l.append(email)
     return l
 
-def valida_user_name(usuario):
+def valida_user_name(usuario, play_list = False):
     client = conexion_BD()
     db = client.MusicPlayList
     cursor = db.usuario.find_one({"username":usuario})
     user_name = ""
-    if cursor is None:
+    if cursor is None and play_list == False:
         return usuario
-    else:
+    if cursor and play_list == False:
         print("\n")
         print(f"Ya existe un usuario ({usuario}) ")
         print("Por favor inténte con otro username")
@@ -160,6 +164,23 @@ def valida_user_name(usuario):
             print("Por favor username válido (Sin signos de puntuación)")
             user_name = input("Introduzca username: ")
         return user_name
+    if cursor and play_list:
+        return usuario
+    if cursor is None and play_list:
+        print("\n")
+        print(f"El usuario ({usuario}) no exite en la Base de Datos")
+        print(f'Rectifique el username o cree un nuevo usuario tecleando número "3"')
+        user_name = input('Introduzca username o "3" para crear un nuevo usuario: ')
+        cursor = db.usuario.find_one({"username":user_name})
+        if user_name != "3":
+            while not user_name.isalnum() or not user_name or (cursor is None):
+                print("Por favor username válido o que este registrado (Sin signos de puntuación)")
+                user_name = input("Introduzca username: ")
+            return user_name
+        else:
+            l = valida_user()
+            crear_user(l[0],l[1],l[2],l[3])
+            return l[2]
 
 def crear_user(nombre, apellido, usuario, email):
     client = conexion_BD()
@@ -198,6 +219,40 @@ def une_listas(l):
     return l
 
 def valida_playlist():
+    l = []
+    playlist_name = ""
+    user_name = ""
+    song = "0"
+    songs_list = []
+    while not playlist_name:
+        print("\n")
+        print("Por favor introduzca nombre para la Playlist")
+        playlist_name = input("Introduzca el nombre de la PlayList: ")
+    else:
+        l.append(playlist_name)
+    while not user_name.isalnum() or not user_name:
+        print("Por favor introduzca username válido (Sin signos de puntuación)")
+        user_name = input("Introduzca username: ")
+    else:
+        l.append(valida_user_name(user_name, play_list=True))
+
+    while song.lower() != "save":
+        print("Elija el número correspondiente a la canción")
+        song = input('Introduzca un número cada vez, del (1-20) y "save" para guardar: ')
+        if if_integer(song) and int(song) in range(1,20) and not song == "":
+            songs_list.append(int(song) - 1)
+        elif song != "sabe" and if_integer(song) and int(song) not in range(1,20) or song != "sabe" and not if_integer(song):
+                print('Opción no válida, Por favor Introduzca un número del (1-20) o "save" para guardar')
+                print("\n")
+    else:
+        if songs_list == []:
+            print("Error, una lista de reproducción no se puede guardar vacia")
+        elif songs_list != []:
+            l.append(list(set(songs_list)))
+            return l
+
+l = valida_playlist()
+print(l)
 
 class PlayList(object):
 
@@ -231,13 +286,3 @@ class PlayList(object):
             "canciones":[self.songs]
             }])
         db.playlist.insert_many(playlist)
-
-
-
-def if_integer(string):
-
-    if string[0] == ('+'):
-        return string[1:].isdigit()
-
-    else:
-        return string.isdigit()
