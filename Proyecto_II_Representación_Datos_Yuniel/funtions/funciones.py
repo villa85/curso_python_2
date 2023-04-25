@@ -85,6 +85,53 @@ def une_listas(l):
                     p +=1
         c -= 1
     return l
+def opciones(option):
+    if option =="":
+        print('1- Crear estrutura de la base de datos. ', end= "\n")
+        print('2- Generar archivo Json de canciones.', end= "\n")
+        print('3- Crear Usuario.', end= "\n")
+        print('4- Mostrar sugencias de canciones.', end= "\n")
+        print('5- Crear PlayList', end= "\n\n")
+    elif option =="1":
+        print('1- Crear estrutura de la base de datos. ', end= "")
+        print("\U00002714")
+        print('2- Generar archivo Json de canciones. ', end= "\n")
+        print('3- Crear Usuario.', end= "\n")
+        print('4- Mostrar sugencias de canciones. ', end= "\n")
+        print('5- Crear PlayList. ', end= "\n\n")
+    elif option =="2":
+        print('1- Crear estrutura de la base de datos. ', end= "")
+        print("\U000026A0")
+        print('2- Generar archivo Json de canciones. ', end= "")
+        print("\U00002714")
+        print('3- Crear Usuario.', end= "\n")
+        print('4- Mostrar sugencias de canciones. ', end= "\n")
+        print('5- Crear PlayList. ', end= "\n\n")
+    elif option =="3":
+        print('1- Crear estrutura de la base de datos. ', end= "")
+        print("\U000026A0")
+        print('2- Generar archivo Json de canciones. ', end= "\n")
+        print('3- Crear Usuario. ', end= "")
+        print("\U00002714")
+        print('4- Mostrar sugencias de canciones. ', end= "\n")
+        print('5- Crear PlayList. ', end= "\n\n")
+    elif option =="4":
+        print('1- Crear estrutura de la base de datos. ', end= "")
+        print("\U000026A0")
+        print('2- Generar archivo Json de canciones. ', end= "\n")
+        print('3- Crear Usuario.', end= "\n")
+        print('4- Mostrar sugencias de canciones. ', end= "")
+        print("\U00002714")
+        print('5- Crear PlayList. ', end= "\n\n")
+    elif option =="5":
+        print('1- Crear estrutura de la base de datos. ', end= "")
+        print("\U000026A0")
+        print('2- Generar archivo Json de canciones. ', end= "\n")
+        print('3- Crear Usuario.', end= "\n")
+        print('4- Mostrar sugencias de canciones. ', end= "\n")
+        print('5- Crear PlayList. ', end= "")
+        print("\U00002714")
+        print("\n\n")
 
 def if_integer(string):
         return string.isdigit()
@@ -137,7 +184,7 @@ def lista_canciones(cant = 20): # Una lista de 20 las canciones aleatorias (_ids
     db = client.MusicPlayList
     n = db.list_collection_names()
     cursor = db.canciones.find()
-    if "canciones" in n and cursor.count() != 0:
+    if "canciones" in n and cursor.count() > 0:
         for i in cursor:
             l.append(i["_id"])
         l = random.SystemRandom().sample(l, cant)
