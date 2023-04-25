@@ -12,6 +12,7 @@ if __name__ == '__main__':
         print("\n")
         if opcion == "1":
             f.extrutura_BD()
+            f.opciones(opcion)
         elif opcion == "2":
             f.crear_json_canciones()
             f.opciones(opcion)
