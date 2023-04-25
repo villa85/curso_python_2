@@ -4,11 +4,12 @@ from funtions import funciones as f
 if __name__ == '__main__':
     print("\n")
     print('Proyecto "MusicPlayList en MongoDB" por Yuniel Villalón.', end= "\n\n")
-    print('Elija la "tarea" a realizar, escribiendo el Número correspondiente o fin para terminar.', end= "\n\n")
+    print('Elija la "opción" a realizar, escribiendo el Número correspondiente o fin para terminar.', end= "\n\n")
     print('1- Crear estrutura de la base de datos', end= "\n")
     print('2- Generar archivo Json de canciones', end= "\n")
     print('3- Crear Usuario', end= "\n")
-    print('4- Mostrar sugencias de canciones', end= "\n\n")
+    print('4- Mostrar sugencias de canciones', end= "\n")
+    print('5- Crear PlayList', end= "\n\n")
 
     opcion = "0"
 
@@ -27,11 +28,13 @@ if __name__ == '__main__':
             s = f.PlayList("PlayListGeneral", "admin", twenty_random_songs)
             s.mostrar_sugerencias()
         elif opcion == "5":
-            twenty_random_songs = f.lista_canciones()
-            s = f.PlayList("PlayListGeneral", "admin", twenty_random_songs)
-            s.mostrar_sugerencias()
+            if 'twenty_random_songs' not in locals():
+                print("Error, Antes debes mostrar las sugerencias de canciones (Paso 4)")
+                print("\n")
+            else:
+                f.valida_playlist(twenty_random_songs)
         elif opcion != "fin" and f.if_integer(opcion) and int(opcion) not in range(1,4) or opcion != "fin" and not f.if_integer(opcion):
-                print('Opción no válida, Por favor Introduzca un número del (1-8) o "fin" para salir')
+                print('Opción no válida, Por favor Introduzca un número del (1-5) o "fin" para salir')
                 print("\n")
     else:
         print("Muchas Gracias")

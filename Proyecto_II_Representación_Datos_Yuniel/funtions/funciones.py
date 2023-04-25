@@ -32,6 +32,45 @@ def extrutura_BD():
         print("La colección canciones ya existe")
         print("\n")
 
+class PlayList(object):
+
+    def __init__(self, nombre, usuario, canciones):
+        self.name = nombre
+        self.user = usuario
+        self.songs = canciones
+
+
+    def mostrar_sugerencias(self): # Una lista de canciones aletorias con (nombre, grupo, id)
+        l = []
+        client = conexion_BD()
+        db = client.MusicPlayList
+        if self.songs != []:
+            for i in self.songs:
+                cursor = db.canciones.find({"_id": i})
+                if cursor:
+                    for j in cursor:
+                        t = j["nombre"], j["cantante"]
+                        l.append(t)
+            l = list(enumerate(l, start=1))
+            print(tabulate(l, headers=['Número', 'Nombre Canción  -  Banda Rock']))
+            print("\n")
+        else:
+            print('ERROR, la colleción "canciones" no ha sido creada o se encuatra vacia. Ejecute las opciones (1 y 2) y asegurese que el archivo JSON ha sido importado correctamente en la BD.')
+            print("\n")
+
+    def crearplaylist (self):
+        client = conexion_BD()
+        db = client.MusicPlayList
+        playlist = ([{
+            "nombre":self.name,
+            "username":self.user,
+            "canciones":[self.songs]
+            }])
+        db.playlist.insert_many(playlist)
+        print("\n")
+        print(f'Lista de reproducción "{self.name}" creada con exito')
+        print("\n")
+
 def une_listas(l):
     p = 0
     c = len(l)
@@ -94,26 +133,17 @@ def crear_json_canciones():
 
 def lista_canciones(cant = 20): # Una lista de 20 las canciones aleatorias (_ids)
     l = []
-    n = []
     client = conexion_BD()
     db = client.MusicPlayList
+    n = db.list_collection_names()
     cursor = db.canciones.find()
-    for i in cursor:
-        l.append(i["_id"])
-    l = random.SystemRandom().sample(l, cant)
-    return l
-
-def mostrar_sugerencias(lista): # Una lista de canciones aletorias con (nombre, grupo, id)
-    l = []
-    client = conexion_BD()
-    db = client.MusicPlayList
-    for i in lista:
-        cursor = db.canciones.find({"_id": i})
-        if cursor:
-            for j in cursor:
-                t = j["nombre"], j["cantante"]
-                l.append(t)
-    return l
+    if "canciones" in n and cursor.count() != 0:
+        for i in cursor:
+            l.append(i["_id"])
+        l = random.SystemRandom().sample(l, cant)
+        return l
+    else:
+        return l
 
 def es_correo_valido(correo):
     expresion_regular = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"
@@ -218,14 +248,19 @@ def une_listas(l):
         c -= 1
     return l
 
-def valida_playlist():
+def lista_canciones_playlist(list_sugerencias, userlist):
+    l = []
+    for i in userlist:
+        l.append(list_sugerencias[i])
+    return l
+
+def valida_playlist(list_sugerencias):
     l = []
     playlist_name = ""
     user_name = ""
     song = "0"
     songs_list = []
     while not playlist_name:
-        print("\n")
         print("Por favor introduzca nombre para la Playlist")
         playlist_name = input("Introduzca el nombre de la PlayList: ")
     else:
@@ -241,48 +276,19 @@ def valida_playlist():
         song = input('Introduzca un número cada vez, del (1-20) y "save" para guardar: ')
         if if_integer(song) and int(song) in range(1,20) and not song == "":
             songs_list.append(int(song) - 1)
-        elif song != "sabe" and if_integer(song) and int(song) not in range(1,20) or song != "sabe" and not if_integer(song):
-                print('Opción no válida, Por favor Introduzca un número del (1-20) o "save" para guardar')
+        elif song != "save" and if_integer(song) and int(song) not in range(1,20) or song != "save" and not if_integer(song):
+                print('Opción no válida, Por favor Introduzca un número del (1-20) y "save" para guardar')
                 print("\n")
     else:
         if songs_list == []:
-            print("Error, una lista de reproducción no se puede guardar vacia")
+            print("ERROR, una lista de reproducción no se puede guardar vacia")
         elif songs_list != []:
-            l.append(list(set(songs_list)))
-            return l
-
-l = valida_playlist()
-print(l)
-
-class PlayList(object):
-
-    def __init__(self, nombre, usuario, canciones):
-        self.name = nombre
-        self.user = usuario
-        self.songs = canciones
+            l.append(lista_canciones_playlist(list_sugerencias, list(set(songs_list))))
+    p = PlayList(l[0], l[1], l[2])
+    p.crearplaylist()
 
 
-    def mostrar_sugerencias(self): # Una lista de canciones aletorias con (nombre, grupo, id)
-        l = []
-        client = conexion_BD()
-        db = client.MusicPlayList
-        for i in self.songs:
-            cursor = db.canciones.find({"_id": i})
-            if cursor:
-                for j in cursor:
-                    t = j["nombre"], j["cantante"]
-                    l.append(t)
-        l = list(enumerate(l, start=1))
-        print(tabulate(l, headers=['Número', 'Nombre Canción  -  Banda Rock']))
-        print("\n")
-        # return l
 
-    def crearplaylist (self):
-        client = conexion_BD()
-        db = client.MusicPlayList
-        playlist = ([{
-            "nombre":self.name,
-            "username":self.user,
-            "canciones":[self.songs]
-            }])
-        db.playlist.insert_many(playlist)
+# # userlist = [8, 1, 3, 4]
+# li = lista_canciones()
+# valida_playlist(li)
