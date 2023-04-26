@@ -112,6 +112,46 @@ class PlayList(object):
         print(f'Lista de reproducción "{self.name}" creada con exito')
         print("\n")
 
+    def consultar_playlists(self):
+        l = []
+        client = conexion_BD()
+        db = client.MusicPlayList
+        if self.user:
+            cursor = db.playlist.find({"username":self.user})
+            if cursor:
+                for i in cursor:
+                    t = i["nombre"], len(i["canciones"][0])
+                    l.append(t)
+            l = list(enumerate(l, start=1))
+            print(tabulate(l, headers=['Número', 'Nombre PlayList - Cantidad de canciones']))
+            print("\n")
+        else:
+            print('ERROR, la colleción "playlist" no ha sido creada o se encuatra vacia. Ejecute las opciones (1 y 2) y asegurese que el archivo JSON ha sido importado correctamente en la BD.')
+            print("\n")
+
+def valida_user_consultar_playlists():
+    user_name = ""
+    while not user_name:
+        print("Por favor introduza username registrado")
+        user_name = input("Introduzca username: ")
+    else:
+        client = conexion_BD()
+        db = client.MusicPlayList
+        cursor = db.usuario.find_one({"username":user_name})
+        if cursor:
+            return user_name
+        elif cursor is None:
+            print("\n")
+            print(f"El usuario ({user_name}) no exite en la Base de Datos")
+            print('Rectifique, username no registrado')
+            user_name = input('Introduzca username: ')
+            cursor = db.usuario.find_one({"username":user_name})
+            while cursor is None:
+                print('Rectifique, username no registrado')
+                user_name = input("Introduzca username: ")
+                cursor = db.usuario.find_one({"username":user_name})
+            return user_name
+
 def lista_canciones(cant = 20): # Una lista de 20 las canciones aleatorias (_ids)
     l = []
     client = conexion_BD()

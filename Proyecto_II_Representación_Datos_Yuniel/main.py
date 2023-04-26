@@ -33,14 +33,14 @@ if __name__ == '__main__':
                 f.valida_playlist(twenty_random_songs)
                 e.opciones(opcion)
         elif opcion == "6":
-            if 'twenty_random_songs' not in locals():
-                print("Error, Antes debes mostrar las sugerencias de canciones (Paso 4)")
-                print("\n")
-            else:
-                f.valida_playlist(twenty_random_songs)
-                e.opciones(opcion)
-        elif opcion != "fin" and f.if_integer(opcion) and int(opcion) not in range(1,6) or opcion != "fin" and not f.if_integer(opcion):
-                print('Opción no válida, Por favor Introduzca un número del (1-5) o "fin" para salir')
+            i = f.valida_user_consultar_playlists()
+            s = f.PlayList("PlayListGeneral", i, [])
+            s.consultar_playlists()
+            e.opciones(opcion)
+        elif opcion == "7":
+            e.opciones(opcion)
+        elif opcion != "fin" and e.if_integer(opcion) and int(opcion) not in range(1,7) or opcion != "fin" and not e.if_integer(opcion):
+                print('Opción no válida, Por favor Introduzca un número del (1-7) o "fin" para salir')
                 print("\n")
     else:
         print("Muchas Gracias")
