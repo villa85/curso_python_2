@@ -3,8 +3,8 @@ import json
 import requests
 import pymongo
 import random
-import re
 from tabulate import tabulate
+import funtions.extra as e
 
 def conexion_BD():
     client = pymongo.MongoClient("mongodb://localhost:27017")
@@ -31,6 +31,47 @@ def extrutura_BD():
     else:
         print("La colección canciones ya existe")
         print("\n")
+
+def crear_json_canciones():
+
+    l = ['https://itunes.apple.com/search?term=System+of+a+Down&limit=5',
+        'https://itunes.apple.com/search?term=Marilyn+Manson&limit=5',
+        'https://itunes.apple.com/search?term=Audioslave&limit=5',
+        'https://itunes.apple.com/search?term=LINKIN+PARK&limit=5',
+        'https://itunes.apple.com/search?term=Muse&limit=5',
+        'https://itunes.apple.com/search?term=Gorillaz&limit=5',
+        'https://itunes.apple.com/search?term=Rammstein&limit=5',
+        'https://itunes.apple.com/search?term=Avenged+Sevenfold&limit=5',
+        'https://itunes.apple.com/search?term=The+Rolling+Stonesd&limit=5',
+        'https://itunes.apple.com/search?term=Limp+Bizkit&limit=5']
+
+    data = {}
+    data['s'] = []
+    x = {}
+    d= []
+
+    for j in l:
+        response = requests.get(j)
+        json_data = json.loads(response.content)
+        data['s'].append(json_data["results"])
+
+    m = e.une_listas(data['s'])
+
+    for i in m:
+        x = {
+            "nombre": i.get('trackName', i["collectionName"]),
+            "cantante": i.get('artistName', None),
+            "genero": i.get('primaryGenreName', None),
+            "album": i.get('collectionName', None),
+            "url": i.get('trackViewUrl', None)
+            }
+        d.append(x)
+
+    file_name = "data.json"
+    with open(file_name, 'w') as file:
+        json.dump(d, file, indent=4)
+    print(f'Archivo "{file_name}" creado con exito en el directorio de trabajo: {os.getcwd()}')
+    print("\n")
 
 class PlayList(object):
 
@@ -71,113 +112,6 @@ class PlayList(object):
         print(f'Lista de reproducción "{self.name}" creada con exito')
         print("\n")
 
-def une_listas(l):
-    p = 0
-    c = len(l)
-
-    while c > 0:
-        for i in l:
-            if isinstance(i, list):
-                p = l.index(i)
-                lv = l.pop(p)
-                for j in range(len(lv)):
-                    l.insert(p, lv[j])
-                    p +=1
-        c -= 1
-    return l
-def opciones(option):
-    if option =="":
-        print('1- Crear estrutura de la base de datos. ', end= "\n")
-        print('2- Generar archivo Json de canciones.', end= "\n")
-        print('3- Crear Usuario.', end= "\n")
-        print('4- Mostrar sugencias de canciones.', end= "\n")
-        print('5- Crear PlayList', end= "\n\n")
-    elif option =="1":
-        print('1- Crear estrutura de la base de datos. ', end= "")
-        print("\U00002714")
-        print('2- Generar archivo Json de canciones. ', end= "\n")
-        print('3- Crear Usuario.', end= "\n")
-        print('4- Mostrar sugencias de canciones. ', end= "\n")
-        print('5- Crear PlayList. ', end= "\n\n")
-    elif option =="2":
-        print('1- Crear estrutura de la base de datos. ', end= "")
-        print("\U000026A0")
-        print('2- Generar archivo Json de canciones. ', end= "")
-        print("\U00002714")
-        print('3- Crear Usuario.', end= "\n")
-        print('4- Mostrar sugencias de canciones. ', end= "\n")
-        print('5- Crear PlayList. ', end= "\n\n")
-    elif option =="3":
-        print('1- Crear estrutura de la base de datos. ', end= "")
-        print("\U000026A0")
-        print('2- Generar archivo Json de canciones. ', end= "\n")
-        print('3- Crear Usuario. ', end= "")
-        print("\U00002714")
-        print('4- Mostrar sugencias de canciones. ', end= "\n")
-        print('5- Crear PlayList. ', end= "\n\n")
-    elif option =="4":
-        print('1- Crear estrutura de la base de datos. ', end= "")
-        print("\U000026A0")
-        print('2- Generar archivo Json de canciones. ', end= "\n")
-        print('3- Crear Usuario.', end= "\n")
-        print('4- Mostrar sugencias de canciones. ', end= "")
-        print("\U00002714")
-        print('5- Crear PlayList. ', end= "\n\n")
-    elif option =="5":
-        print('1- Crear estrutura de la base de datos. ', end= "")
-        print("\U000026A0")
-        print('2- Generar archivo Json de canciones. ', end= "\n")
-        print('3- Crear Usuario.', end= "\n")
-        print('4- Mostrar sugencias de canciones. ', end= "\n")
-        print('5- Crear PlayList. ', end= "")
-        print("\U00002714")
-        print("\n\n")
-
-def if_integer(string):
-        return string.isdigit()
-
-
-def crear_json_canciones():
-
-    l = ['https://itunes.apple.com/search?term=System+of+a+Down&limit=5',
-        'https://itunes.apple.com/search?term=Marilyn+Manson&limit=5',
-        'https://itunes.apple.com/search?term=Audioslave&limit=5',
-        'https://itunes.apple.com/search?term=LINKIN+PARK&limit=5',
-        'https://itunes.apple.com/search?term=Muse&limit=5',
-        'https://itunes.apple.com/search?term=Gorillaz&limit=5',
-        'https://itunes.apple.com/search?term=Rammstein&limit=5',
-        'https://itunes.apple.com/search?term=Avenged+Sevenfold&limit=5',
-        'https://itunes.apple.com/search?term=The+Rolling+Stonesd&limit=5',
-        'https://itunes.apple.com/search?term=Limp+Bizkit&limit=5']
-
-    data = {}
-    data['s'] = []
-    x = {}
-    d= []
-
-    for j in l:
-        response = requests.get(j)
-        json_data = json.loads(response.content)
-        data['s'].append(json_data["results"])
-
-    m = une_listas(data['s'])
-
-    for i in m:
-        x = {
-            "nombre": i.get('trackName', i["collectionName"]),
-            "cantante": i.get('artistName', None),
-            "genero": i.get('primaryGenreName', None),
-            "album": i.get('collectionName', None),
-            "url": i.get('trackViewUrl', None)
-            }
-        d.append(x)
-
-    file_name = "data.json"
-    with open(file_name, 'w') as file:
-        json.dump(d, file, indent=4)
-    print(f'Archivo "{file_name}" creado con exito en el directorio de trabajo: {os.getcwd()}')
-    print("\n")
-
 def lista_canciones(cant = 20): # Una lista de 20 las canciones aleatorias (_ids)
     l = []
     client = conexion_BD()
@@ -191,10 +125,6 @@ def lista_canciones(cant = 20): # Una lista de 20 las canciones aleatorias (_ids
         return l
     else:
         return l
-
-def es_correo_valido(correo):
-    expresion_regular = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"
-    return re.match(expresion_regular, correo) is not None
 
 def valida_user():
     l = []
@@ -219,7 +149,7 @@ def valida_user():
         user_name = input("Introduzca username: ")
     else:
         l.append(valida_user_name(user_name))
-    while not es_correo_valido(email) or not email:
+    while not e.es_correo_valido(email) or not email:
         print("Por favor introduzca un correo válido")
         email = input("Introduzca dirección de correo: ")
     else:
@@ -280,21 +210,6 @@ def crear_user(nombre, apellido, usuario, email):
         print(f"Ya existe un usuario ({usuario}) ")
         print("Por favor inténte con otro username")
 
-def une_listas(l):
-    p = 0
-    c = len(l)
-
-    while c > 0:
-        for i in l:
-            if isinstance(i, list):
-                p = l.index(i)
-                lv = l.pop(p)
-                for j in range(len(lv)):
-                    l.insert(p, lv[j])
-                    p +=1
-        c -= 1
-    return l
-
 def lista_canciones_playlist(list_sugerencias, userlist):
     l = []
     for i in userlist:
@@ -321,9 +236,9 @@ def valida_playlist(list_sugerencias):
     while song.lower() != "save":
         print("Elija el número correspondiente a la canción")
         song = input('Introduzca un número cada vez, del (1-20) y "save" para guardar: ')
-        if if_integer(song) and int(song) in range(1,20) and not song == "":
+        if e.if_integer(song) and int(song) in range(1,20) and not song == "":
             songs_list.append(int(song) - 1)
-        elif song != "save" and if_integer(song) and int(song) not in range(1,20) or song != "save" and not if_integer(song):
+        elif song != "save" and e.if_integer(song) and int(song) not in range(1,20) or song != "save" and not e.if_integer(song):
                 print('Opción no válida, Por favor Introduzca un número del (1-20) y "save" para guardar')
                 print("\n")
     else:
@@ -333,9 +248,3 @@ def valida_playlist(list_sugerencias):
             l.append(lista_canciones_playlist(list_sugerencias, list(set(songs_list))))
     p = PlayList(l[0], l[1], l[2])
     p.crearplaylist()
-
-
-
-# # userlist = [8, 1, 3, 4]
-# li = lista_canciones()
-# valida_playlist(li)
