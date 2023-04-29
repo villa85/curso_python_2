@@ -10,6 +10,7 @@ def conexion_BD():
     client = pymongo.MongoClient("mongodb://localhost:27017")
     return client
 
+
 def extrutura_BD():
     client = conexion_BD()
     db = client.MusicPlayList
@@ -80,8 +81,7 @@ class PlayList(object):
         self.user = usuario
         self.songs = canciones
 
-
-    def mostrar_sugerencias(self): # Una lista de canciones aletorias con (nombre, grupo, id)
+    def mostrar_sugerencias(self): # Una lista de canciones aletorias con (nombre, grupo)
         l = []
         client = conexion_BD()
         db = client.MusicPlayList
@@ -122,9 +122,13 @@ class PlayList(object):
                 for i in cursor:
                     t = i["nombre"], len(i["canciones"][0])
                     l.append(t)
+            elif not cursor:
+                print(f'Lista de reproducción "{self.name}" creada con exito')
+
             l = list(enumerate(l, start=1))
             print(tabulate(l, headers=['Número', 'Nombre PlayList - Cantidad de canciones']))
             print("\n")
+
         else:
             print('ERROR, la colleción "playlist" no ha sido creada o se encuatra vacia. Ejecute las opciones (1 y 2) y asegurese que el archivo JSON ha sido importado correctamente en la BD.')
             print("\n")

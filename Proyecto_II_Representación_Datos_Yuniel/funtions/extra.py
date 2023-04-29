@@ -68,7 +68,7 @@ def opciones(option):
         print('4- Mostrar sugencias de canciones. ', end= "")
         print("\U00002714")
         print('5- Crear PlayList. ', end= "\n")
-        print('6- Consultar PlayList. ', end= "\n\n")
+        print('6- Consultar PlayList. ', end= "\n")
         print('7- Mostrar Canciones. ', end= "\n\n")
     elif option =="5":
         print('1- Crear estrutura de la base de datos. ', end= "")
