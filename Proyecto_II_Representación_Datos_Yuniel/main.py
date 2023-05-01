@@ -35,13 +35,26 @@ if __name__ == '__main__':
         elif opcion == "6":
             i = f.valida_user_consultar_playlists()
             s = f.PlayList("PlayListGeneral", i, [])
-            s.consultar_playlists()
+            songs_list_playlist = s.consultar_playlists()
+            e.lista_tabular(songs_list_playlist[0], 0)
             e.opciones(opcion)
         elif opcion == "7":
-            e.opciones(opcion)
+            if 'songs_list_playlist' not in locals():
+                print("Error, Antes debes Consultar las PlaysList (Paso 6)")
+                print("\n")
+            else:
+                f.get_playlist(songs_list_playlist[1])
+                e.opciones(opcion)
+        elif opcion == "8":
+            if 'songs_list_playlist' not in locals():
+                print("Error, Antes debes Consultar las PlaysList (Paso 6)")
+                print("\n")
+            else:
+                f.get_playlist(songs_list_playlist[1], playlist = True)
+                e.opciones(opcion)
         elif opcion != "fin" and e.if_integer(opcion) and int(opcion) not in range(1,7) or opcion != "fin" and not e.if_integer(opcion):
                 print('Opción no válida, Por favor Introduzca un número del (1-7) o "fin" para salir')
-                print("\n")
+
     else:
         print("Muchas Gracias")
 

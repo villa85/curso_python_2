@@ -3,8 +3,8 @@ import json
 import requests
 import pymongo
 import random
-from tabulate import tabulate
 import funtions.extra as e
+from tabulate import tabulate
 
 def conexion_BD():
     client = pymongo.MongoClient("mongodb://localhost:27017")
@@ -81,6 +81,14 @@ class PlayList(object):
         self.user = usuario
         self.songs = canciones
 
+    def __str__(self, lista, playlist = False):
+        if playlist:
+            print(f"Nombre del PlayList: {self.songs[0]}")
+            return e.lista_tabular(lista, 2)
+        else:
+            print("Listado de Canciones")
+            return e.lista_tabular(lista, 3)
+
     def mostrar_sugerencias(self): # Una lista de canciones aletorias con (nombre, grupo)
         l = []
         client = conexion_BD()
@@ -92,9 +100,7 @@ class PlayList(object):
                     for j in cursor:
                         t = j["nombre"], j["cantante"]
                         l.append(t)
-            l = list(enumerate(l, start=1))
-            print(tabulate(l, headers=['Número', 'Nombre Canción  -  Banda Rock']))
-            print("\n")
+            e.lista_tabular(l, sugerencias = 1)
         else:
             print('ERROR, la colleción "canciones" no ha sido creada o se encuatra vacia. Ejecute las opciones (1 y 2) y asegurese que el archivo JSON ha sido importado correctamente en la BD.')
             print("\n")
@@ -112,31 +118,131 @@ class PlayList(object):
         print(f'Lista de reproducción "{self.name}" creada con exito')
         print("\n")
 
-    def consultar_playlists(self):
+    def consultar_playlists(self, list_song = False):
         l = []
+        s = []
+        lista_general = []
         client = conexion_BD()
         db = client.MusicPlayList
         if self.user:
             cursor = db.playlist.find({"username":self.user})
             if cursor:
                 for i in cursor:
+                    c = i["nombre"], i["canciones"][0]
                     t = i["nombre"], len(i["canciones"][0])
                     l.append(t)
+                    s.append(c)
             elif not cursor:
-                print(f'Lista de reproducción "{self.name}" creada con exito')
+                print(f'El usuario "{self.user}" no existe')
 
-            l = list(enumerate(l, start=1))
-            print(tabulate(l, headers=['Número', 'Nombre PlayList - Cantidad de canciones']))
-            print("\n")
+            lista_general.append(l)
+            lista_general.append(s)
+            return lista_general
 
         else:
             print('ERROR, la colleción "playlist" no ha sido creada o se encuatra vacia. Ejecute las opciones (1 y 2) y asegurese que el archivo JSON ha sido importado correctamente en la BD.')
             print("\n")
+    # @works_for_all
+    # def mostrar_canciones(self):
+    #     l = []
+    #     client = conexion_BD()
+    #     db = client.MusicPlayList
+    #     if self.songs[1] != []:
+    #         for i in self.songs[1]:
+    #             cursor = db.canciones.find({"_id": i})
+    #             if cursor:
+    #                 for j in cursor:
+    #                     t = j["nombre"], j["cantante"]
+    #                     l.append(t)
+    #         return self.__str__(l)
+    #     else:
+    #         print('ERROR, la colleción "canciones" no ha sido creada o se encuatra vacia. Ejecute las opciones (1 y 2) y asegurese que el archivo JSON ha sido importado correctamente en la BD.')
+    #         print("\n")
+    def works_for_all(func):
+        def mostrar_canciones(self, playlist = False):
+            l = []
+            client = conexion_BD()
+            db = client.MusicPlayList
+            if self.songs[1] != []:
+                for i in self.songs[1]:
+                    cursor = db.canciones.find({"_id": i})
+                    if cursor:
+                        for j in cursor:
+                            t = j["nombre"], j["cantante"], j["genero"]
+                            l.append(t)
+                if playlist == True:
+                    return self.__str__(l, playlist)
+                else:
+                    return self.__str__(l, playlist)
+            else:
+                print('ERROR, la colleción "canciones" no ha sido creada o se encuatra vacia. Ejecute las opciones (1 y 2) y asegurese que el archivo JSON ha sido importado correctamente en la BD.')
+                print("\n")
+            return func(self, playlist)
+        return mostrar_canciones
+
+    @works_for_all
+    def mostrar_playlists(self, playlist):
+        if playlist:
+            print(f"Nombre de la PlayList: {self.songs[0]}")
+        else:
+            print("Listado de Canciones")
+
+
+
+def mostrar_canciones(lista):
+    l = []
+    client = conexion_BD()
+    db = client.MusicPlayList
+    if lista[1] != []:
+        for i in lista[1]:
+            cursor = db.canciones.find({"_id": i})
+            if cursor:
+                for j in cursor:
+                    t = j["nombre"], j["cantante"]
+                    l.append(t)
+
+        print(f"Nombre de la PlayList: {lista[0]}")
+        e.lista_tabular(l, 2)
+        print("\n")
+    else:
+        print('ERROR, la colleción "canciones" no ha sido creada o se encuatra vacia. Ejecute las opciones (1 y 2) y asegurese que el archivo JSON ha sido importado correctamente en la BD.')
+        print("\n")
+
+def get_playlist(lista, playlist = False):
+    playlist_numb = "0"
+    print("Elija el número correspondiente a la PlayList")
+    playlist_numb = input(f'Introduzca un número: ')
+    print("\n")
+    para = True
+    bad = e.if_integer(playlist_numb) and int(playlist_numb) not in range(1,len(lista)+1) or not e.if_integer(playlist_numb)
+    good = e.if_integer(playlist_numb) and int(playlist_numb) in range(1,len(lista)+1) and not playlist_numb == ""
+    while para:
+        if bad:
+            print(f'Opción no válida, Por favor Introduzca un número (1-{len(lista)})')
+            print("Elija el número correspondiente a la PlayList")
+            playlist_numb = input(f'Introduzca un número: ')
+            print("\n")
+            if e.if_integer(playlist_numb) and int(playlist_numb) in range(1,len(lista)+1) and not playlist_numb == "":
+                position = int(playlist_numb) - 1
+                para = False
+        elif good:
+            position = int(playlist_numb) - 1
+            para = False
+    s = PlayList("PlayListGeneral", "admin", lista[position])
+    # return s.mostrar_canciones()mostrar_playlists
+    if playlist:
+        return s.mostrar_playlists(playlist = True)
+    else:
+        return s.mostrar_playlists()
+
+
+
+
 
 def valida_user_consultar_playlists():
     user_name = ""
     while not user_name:
-        print("Por favor introduza username registrado")
+        print("Por favor introduzca username registrado")
         user_name = input("Introduzca username: ")
     else:
         client = conexion_BD()
@@ -270,7 +376,8 @@ def valida_playlist(list_sugerencias):
         print("Por favor introduzca nombre para la Playlist")
         playlist_name = input("Introduzca el nombre de la PlayList: ")
     else:
-        l.append(playlist_name)
+        n = playlist_name.capitalize()
+        l.append(n)
     while not user_name.isalnum() or not user_name:
         print("Por favor introduzca username válido (Sin signos de puntuación)")
         user_name = input("Introduzca username: ")
