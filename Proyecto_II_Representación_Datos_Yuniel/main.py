@@ -22,6 +22,8 @@ if __name__ == '__main__':
             e.opciones(opcion)
         elif opcion == "4":
             twenty_random_songs = f.lista_canciones()
+            p = f.PlayList("Hard Rock", "admin", f.lista_canciones(cant = 5))
+            p.crearplaylist()
             s = f.PlayList("PlayListGeneral", "admin", twenty_random_songs)
             s.mostrar_sugerencias()
             e.opciones(opcion)
