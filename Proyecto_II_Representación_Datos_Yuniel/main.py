@@ -21,9 +21,14 @@ if __name__ == '__main__':
             f.crear_user(l[0],l[1],l[2],l[3])
             e.opciones(opcion)
         elif opcion == "4":
+            if 'hr' not in locals() and 'sr' not in locals() and 'rs' not in locals():
+                hr = f.PlayList("Hard Rock", "admin", f.lista_canciones(cant = 5))
+                sr = f.PlayList("Soft Rock", "admin", f.lista_canciones(cant = 5))
+                rs = f.PlayList("Rock Start", "admin", f.lista_canciones(cant = 5))
+                hr.crearplaylist()
+                sr.crearplaylist()
+                rs.crearplaylist()
             twenty_random_songs = f.lista_canciones()
-            p = f.PlayList("Hard Rock", "admin", f.lista_canciones(cant = 5))
-            p.crearplaylist()
             s = f.PlayList("PlayListGeneral", "admin", twenty_random_songs)
             s.mostrar_sugerencias()
             e.opciones(opcion)
