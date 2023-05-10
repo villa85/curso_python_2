@@ -7,11 +7,24 @@ import funtions.extra as e
 from tabulate import tabulate
 
 def conexion_BD():
+    """
+    conexion_BD _summary_
+    función que realiza la conexion con la BD local de Mongo
+
+    Returns
+    -------
+    retorna cursor con la conexion a la BD
+    """
     client = pymongo.MongoClient("mongodb://localhost:27017")
     return client
 
 
 def extrutura_BD():
+    """
+    extrutura_BD _summary_
+    crea la estrutura de la BD MusicPlayList, con las colecciones (usuario, playlist, canciones). Y controla que no creen
+    las colecciones ya que son ya existen.
+    """
     client = conexion_BD()
     db = client.MusicPlayList
     l = db.list_collection_names()
@@ -34,6 +47,12 @@ def extrutura_BD():
         print("\n")
 
 def crear_json_canciones():
+    """
+    crear_json_canciones _summary_
+    Genera el JSON de 10 artistas con 5 canciones cada una
+
+    _extended_summary_
+    """
 
     l = ['https://itunes.apple.com/search?term=System+of+a+Down&limit=5',
         'https://itunes.apple.com/search?term=Marilyn+Manson&limit=5',
@@ -60,8 +79,8 @@ def crear_json_canciones():
 
     for i in m:
         x = {
-            "nombre": i.get('trackName', i["collectionName"]),
-            "cantante": i.get('artistName', None),
+            "nombre": i.get('trackName', i["collectionName"]), # se valida que si el nombre de la cancion esta vacion la sustituya por el nombre del album
+            "cantante": i.get('artistName', None), # premite que el nombre del artista pueda ser nulo
             "genero": i.get('primaryGenreName', None),
             "album": i.get('collectionName', None),
             "url": i.get('trackViewUrl', None)
@@ -105,18 +124,21 @@ class PlayList(object):
             print('ERROR, la colleción "canciones" no ha sido creada o se encuatra vacia. Ejecute las opciones (1 y 2) y asegurese que el archivo JSON ha sido importado correctamente en la BD.')
             print("\n")
 
-    def crearplaylist (self):
+    def crearplaylist (self, notification = True):
         client = conexion_BD()
         db = client.MusicPlayList
-        playlist = ([{
-            "nombre":self.name,
-            "username":self.user,
-            "canciones":[self.songs]
-            }])
-        db.playlist.insert_many(playlist)
-        print("\n")
-        print(f'Lista de reproducción "{self.name}" creada con exito')
-        print("\n")
+        cursor = db.playlist.find_one({"nombre":self.name, "username":self.user})
+        if cursor is None:
+            playlist = ([{
+                "nombre":self.name,
+                "username":self.user,
+                "canciones":[self.songs]
+                }])
+            db.playlist.insert_many(playlist)
+            if notification:
+                print("\n")
+                print(f'Lista de reproducción "{self.name}" creada con exito')
+                print("\n")
 
     def consultar_playlists(self, list_song = False):
         l = []
@@ -339,7 +361,7 @@ def valida_user_name(usuario, play_list = False):
             crear_user(l[0],l[1],l[2],l[3])
             return l[2]
 
-def crear_user(nombre, apellido, usuario, email):
+def crear_user(nombre, apellido, usuario, email, notification = True):
     client = conexion_BD()
     db = client.MusicPlayList
     cursor = db.usuario.find_one({"username":usuario})
@@ -352,13 +374,15 @@ def crear_user(nombre, apellido, usuario, email):
 
             }])
         db.usuario.insert_many(user)
-        print("\n")
-        print("Usuario creado con exito")
-        print("\n")
+        if notification:
+            print("\n")
+            print("Usuario creado con exito")
+            print("\n")
     else:
-        print("\n")
-        print(f"Ya existe un usuario ({usuario}) ")
-        print("Por favor inténte con otro username")
+        if notification:
+            print("\n")
+            print(f"Ya existe un usuario ({usuario}) ")
+            print("Por favor inténte con otro username")
 
 def lista_canciones_playlist(list_sugerencias, userlist):
     l = []
