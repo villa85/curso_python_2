@@ -49,7 +49,7 @@ def extrutura_BD():
 def crear_json_canciones():
     """
     crear_json_canciones _summary_
-    Genera el JSON de 10 artistas con 5 canciones cada una
+    Genera un arichivo JSON de 10 artistas con 5 canciones cada una
 
     _extended_summary_
     """
@@ -94,6 +94,12 @@ def crear_json_canciones():
     print("\n")
 
 class PlayList(object):
+    """
+    Clase PlayList: Clase principal PlayList, encargada del tratamiendo de datos realicionados a Lista de Reprodución
+
+    Parameters
+    Nombre de Playlist, Nombre de Usuario, Listado de Caciniones
+    """
 
     def __init__(self, nombre, usuario, canciones):
         self.name = nombre
@@ -101,6 +107,22 @@ class PlayList(object):
         self.songs = canciones
 
     def __str__(self, lista, playlist = False):
+        """
+        __str__ _summary_
+        Permite mostrar PlaysList en diferentes formatos dependiendo el valor de playlist
+
+        Parameters
+        ----------
+        lista
+            lista de reprodución.
+        playlist, optional
+            _description_, by default False
+            controlamos al si queremos ver la playlist o solo las canciones
+
+        Returns
+        -------
+            lista de reprocdución o solo canciones
+        """
         if playlist:
             print(f"Nombre del PlayList: {self.songs[0]}")
             return e.lista_tabular(lista, 2)
@@ -109,6 +131,9 @@ class PlayList(object):
             return e.lista_tabular(lista, 3)
 
     def mostrar_sugerencias(self): # Una lista de canciones aletorias con (nombre, grupo)
+        """
+        mostrar_sugerencias: Muestra un listado de 20 canciones aletorias.
+        """
         l = []
         client = conexion_BD()
         db = client.MusicPlayList
@@ -125,6 +150,14 @@ class PlayList(object):
             print("\n")
 
     def crearplaylist (self, notification = True):
+        """
+        crearplaylist: Función mediante la que se crea las Playlist
+        Parameters
+        ----------
+        notification, optional
+            _description_, by default True
+            Según el valores de la variable "notification" (True o False), se muestran notificaciones de extio o no
+        """
         client = conexion_BD()
         db = client.MusicPlayList
         cursor = db.playlist.find_one({"nombre":self.name, "username":self.user})
@@ -140,7 +173,17 @@ class PlayList(object):
                 print(f'Lista de reproducción "{self.name}" creada con exito')
                 print("\n")
 
-    def consultar_playlists(self, list_song = False):
+    def consultar_playlists(self):
+        """
+        consultar_playlists:Funcion que devuelve las listas de reproducción de un usuario a la vez.
+
+        _extended_summary_
+
+        Returns
+        -------
+            Devuelve una lista que contiene 2 listas embebidas, la primera "Nombre PlayList y cantida de canciones"
+            y  la segunda "Nombre PlayList y listado de canciones"
+        """
         l = []
         s = []
         lista_general = []
@@ -164,24 +207,23 @@ class PlayList(object):
         else:
             print('ERROR, la colleción "playlist" no ha sido creada o se encuatra vacia. Ejecute las opciones (1 y 2) y asegurese que el archivo JSON ha sido importado correctamente en la BD.')
             print("\n")
-    # @works_for_all
-    # def mostrar_canciones(self):
-    #     l = []
-    #     client = conexion_BD()
-    #     db = client.MusicPlayList
-    #     if self.songs[1] != []:
-    #         for i in self.songs[1]:
-    #             cursor = db.canciones.find({"_id": i})
-    #             if cursor:
-    #                 for j in cursor:
-    #                     t = j["nombre"], j["cantante"]
-    #                     l.append(t)
-    #         return self.__str__(l)
-    #     else:
-    #         print('ERROR, la colleción "canciones" no ha sido creada o se encuatra vacia. Ejecute las opciones (1 y 2) y asegurese que el archivo JSON ha sido importado correctamente en la BD.')
-    #         print("\n")
+
+
     def works_for_all(func):
         def mostrar_canciones(self, playlist = False):
+            """
+            mostrar_canciones: Funcion que muestra las canciones de una playlist
+
+            Parameters
+            ----------
+            playlist, optional
+                _description_, by default False
+                Muestra solo las "canciones y el grupo" de una lista o  "las canciones, el grupo, el nombre del playlis y el genero de cada cancion"
+
+            Returns
+            -------
+                Listado de canciones en direntes formatos
+            """
             l = []
             client = conexion_BD()
             db = client.MusicPlayList
@@ -204,33 +246,30 @@ class PlayList(object):
 
     @works_for_all
     def mostrar_playlists(self, playlist):
+        """
+        mostrar_playlists: Decorador para extender la funcionalidad del método
+        mostrar_Canciones
+        """
         if playlist:
             print(f"Nombre de la PlayList: {self.songs[0]}")
         else:
             print("Listado de Canciones")
 
-
-
-def mostrar_canciones(lista):
-    l = []
-    client = conexion_BD()
-    db = client.MusicPlayList
-    if lista[1] != []:
-        for i in lista[1]:
-            cursor = db.canciones.find({"_id": i})
-            if cursor:
-                for j in cursor:
-                    t = j["nombre"], j["cantante"]
-                    l.append(t)
-
-        print(f"Nombre de la PlayList: {lista[0]}")
-        e.lista_tabular(l, 2)
-        print("\n")
-    else:
-        print('ERROR, la colleción "canciones" no ha sido creada o se encuatra vacia. Ejecute las opciones (1 y 2) y asegurese que el archivo JSON ha sido importado correctamente en la BD.')
-        print("\n")
-
 def get_playlist(lista, playlist = False):
+    """
+    get_playlist: Se valida que le usuario introduzca un número valido de lista de reproduccion que va a visualizar
+
+    Parameters
+    ----------
+    lista
+        listado de listas de un usuario
+    playlist, optional
+        _description_, by default False
+        Muestra la playlist en diferentes formatos
+    Returns
+    -------
+        Playslist de usuario
+    """
     playlist_numb = "0"
     print("Elija el número correspondiente a la PlayList")
     playlist_numb = input(f'Introduzca un número: ')
@@ -251,15 +290,10 @@ def get_playlist(lista, playlist = False):
             position = int(playlist_numb) - 1
             para = False
     s = PlayList("PlayListGeneral", "admin", lista[position])
-    # return s.mostrar_canciones()mostrar_playlists
     if playlist:
         return s.mostrar_playlists(playlist = True)
     else:
         return s.mostrar_playlists()
-
-
-
-
 
 def valida_user_consultar_playlists():
     user_name = ""
