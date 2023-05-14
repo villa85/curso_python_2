@@ -296,6 +296,13 @@ def get_playlist(lista, playlist = False):
         return s.mostrar_playlists()
 
 def valida_user_consultar_playlists():
+    """
+    valida_user_consultar_playlists: Valida que usuario este en BD usuarios para poder crear una playlist
+
+    Returns
+    -------
+        devuelve el usuario
+    """
     user_name = ""
     while not user_name:
         print("Por favor introduzca username registrado")
@@ -319,6 +326,17 @@ def valida_user_consultar_playlists():
             return user_name
 
 def lista_canciones(cant = 20): # Una lista de 20 las canciones aleatorias (_ids)
+    """
+    lista_canciones: Genera una lista de ids correspondiente a los ids de canciones
+
+    Parameters
+    ----------
+    cant, optional
+        la lista contara son 20 cancione por defecto, by default 20
+    Returns
+    -------
+        lista de ids(canciones)
+    """
     l = []
     client = conexion_BD()
     db = client.MusicPlayList
@@ -333,6 +351,15 @@ def lista_canciones(cant = 20): # Una lista de 20 las canciones aleatorias (_ids
         return l
 
 def valida_user():
+    """
+    valida_user: Hace las validaciones de cada uno de los atributos de un usuario
+
+    para que se inserte un usuario "válido"
+
+    Returns
+    -------
+        Devuelve una lista donde cada uno de los valores es un atributo valido de la colección usuario
+    """
     l = []
     name = ""
     last_name = ""
@@ -354,7 +381,7 @@ def valida_user():
         print("Por favor username válido (Sin signos de puntuación)")
         user_name = input("Introduzca username: ")
     else:
-        l.append(valida_user_name(user_name))
+        l.append(valida_user_name(user_name)) # se verifica que el usuario ya no se encuentre creado
     while not e.es_correo_valido(email) or not email:
         print("Por favor introduzca un correo válido")
         email = input("Introduzca dirección de correo: ")
@@ -363,6 +390,24 @@ def valida_user():
     return l
 
 def valida_user_name(usuario, play_list = False):
+    """
+    valida_user_name: Metod que busca en la BD si exite el usuario que se quiere crear
+    en caso de que si se encuentre se vuelve a pedir que introduz otro nombre de usuario.
+    Logrando que el user name sea unico
+
+    Parameters
+    ----------
+    usuario
+        Nombre de usuario que se quiere crear
+    play_list, optional
+        si play_list "play_list=True" devuelve el user_name si esta en la BD usuario justo lo que
+        se necesita para crear una PlayList, si "play_list=False" la funcion se esta usando para validar
+        un usuario y crearlo, y si esta le BD usuario se le pide que cree otro
+
+    Returns
+    -------
+        Devuelve un usuario o Inserta el usuario en la BD
+    """
     client = conexion_BD()
     db = client.MusicPlayList
     cursor = db.usuario.find_one({"username":usuario})
@@ -396,6 +441,22 @@ def valida_user_name(usuario, play_list = False):
             return l[2]
 
 def crear_user(nombre, apellido, usuario, email, notification = True):
+    """
+    crear_user: Funcion que inserta un usuario en la BD
+
+    Parameters
+    ----------
+    nombre
+        _description_
+    apellido
+        _description_
+    usuario
+        _description_
+    email
+        _description_
+    notification, optional
+        _description_, by default True
+    """
     client = conexion_BD()
     db = client.MusicPlayList
     cursor = db.usuario.find_one({"username":usuario})
@@ -419,12 +480,33 @@ def crear_user(nombre, apellido, usuario, email, notification = True):
             print("Por favor inténte con otro username")
 
 def lista_canciones_playlist(list_sugerencias, userlist):
+    """
+    lista_canciones_playlist: Busca en la lista de 20 sugerencias de canciones las que el usuario a elegido
+
+    Parameters
+    ----------
+    list_sugerencias
+        lista de 20 canciones (ids)
+    userlist
+        lista de numeros corespondientes a las canciones seleccionadas
+
+    Returns
+    -------
+        lista de canciones (ids) del usuario
+    """
     l = []
     for i in userlist:
         l.append(list_sugerencias[i])
     return l
 
 def valida_playlist(list_sugerencias):
+    """
+    valida_playlist: Funcion que primero valida los datos y luego crea la Playlist
+    Parameters
+    ----------
+    list_sugerencias
+        lista de 20 canciones
+    """
     l = []
     playlist_name = ""
     user_name = ""

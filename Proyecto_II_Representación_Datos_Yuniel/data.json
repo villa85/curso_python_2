@@ -56,18 +56,18 @@
         "url": "https://music.apple.com/us/album/marilyn-manson/724361954?i=724362677&uo=4"
     },
     {
+        "nombre": "Marilyn Manson (feat. Marilyn Manson)",
+        "cantante": "A$AP Ferg",
+        "genero": "Hip-Hop/Rap",
+        "album": "Floor Seats II",
+        "url": "https://music.apple.com/us/album/marilyn-manson-feat-marilyn-manson/1534046471?i=1534046474&uo=4"
+    },
+    {
         "nombre": "Sweet Dreams (Are Made of This)",
         "cantante": "Marilyn Manson",
         "genero": "Hard Rock",
         "album": "Lest We Forget: The Best of Marilyn Manson",
         "url": "https://music.apple.com/us/album/sweet-dreams-are-made-of-this/1440746922?i=1440747077&uo=4"
-    },
-    {
-        "nombre": "The Beautiful People",
-        "cantante": "Marilyn Manson",
-        "genero": "Hard Rock",
-        "album": "Lest We Forget: The Best of Marilyn Manson",
-        "url": "https://music.apple.com/us/album/the-beautiful-people/1440746922?i=1440747194&uo=4"
     },
     {
         "nombre": "Like a Stone",
@@ -84,18 +84,18 @@
         "url": "https://music.apple.com/us/album/show-me-how-to-live/208294748?i=208294773&uo=4"
     },
     {
-        "nombre": "Cochise",
-        "cantante": "Audioslave",
-        "genero": "Hard Rock",
-        "album": "Audioslave",
-        "url": "https://music.apple.com/us/album/cochise/208294748?i=208294752&uo=4"
-    },
-    {
         "nombre": "I Am the Highway",
         "cantante": "Audioslave",
         "genero": "Hard Rock",
         "album": "Audioslave",
         "url": "https://music.apple.com/us/album/i-am-the-highway/208294748?i=208294980&uo=4"
+    },
+    {
+        "nombre": "Cochise",
+        "cantante": "Audioslave",
+        "genero": "Hard Rock",
+        "album": "Audioslave",
+        "url": "https://music.apple.com/us/album/cochise/208294748?i=208294752&uo=4"
     },
     {
         "nombre": "Shadow On the Sun",
@@ -203,11 +203,11 @@
         "url": "https://music.apple.com/us/album/rock-the-house/850576570?i=850576694&uo=4"
     },
     {
-        "nombre": "5/4",
+        "nombre": "19-2000 (Soulchild Remix)",
         "cantante": "Gorillaz",
         "genero": "Alternative",
         "album": "Gorillaz",
-        "url": "https://music.apple.com/us/album/5-4/850576570?i=850576657&uo=4"
+        "url": "https://music.apple.com/us/album/19-2000-soulchild-remix/850576570?i=850576766&uo=4"
     },
     {
         "nombre": "Deutschland",
@@ -217,18 +217,18 @@
         "url": "https://music.apple.com/us/album/deutschland/1456789831?i=1456789852&uo=4"
     },
     {
-        "nombre": "Ausl\u00e4nder",
-        "cantante": "Rammstein",
-        "genero": "Rock",
-        "album": "Rammstein",
-        "url": "https://music.apple.com/us/album/ausl%C3%A4nder/1456789831?i=1456790081&uo=4"
-    },
-    {
         "nombre": "Weit weg",
         "cantante": "Rammstein",
         "genero": "Rock",
         "album": "Rammstein",
         "url": "https://music.apple.com/us/album/weit-weg/1456789831?i=1456790192&uo=4"
+    },
+    {
+        "nombre": "Ausl\u00e4nder",
+        "cantante": "Rammstein",
+        "genero": "Rock",
+        "album": "Rammstein",
+        "url": "https://music.apple.com/us/album/ausl%C3%A4nder/1456789831?i=1456790081&uo=4"
     },
     {
         "nombre": "Tattoo",
@@ -308,10 +308,10 @@
         "url": "https://music.apple.com/us/album/limp-bizkit-feat-jay-espi/1551830856?i=1551830862&uo=4"
     },
     {
-        "nombre": "Limp Bizkit!",
-        "cantante": "LilWoah",
-        "genero": "Hip-Hop/Rap",
-        "album": "Lil Woah - EP",
-        "url": "https://music.apple.com/us/album/limp-bizkit/1505215108?i=1505215110&uo=4"
+        "nombre": "Limp Bizkit",
+        "cantante": "DELTA ARTHUR",
+        "genero": "Alternative",
+        "album": "Tutaev, Pt. 2",
+        "url": "https://music.apple.com/us/album/limp-bizkit/1481177454?i=1481177642&uo=4"
     }
 ]

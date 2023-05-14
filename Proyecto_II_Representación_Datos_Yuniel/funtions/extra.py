@@ -24,6 +24,16 @@ def es_correo_valido(correo):
     return re.match(expresion_regular, correo) is not None
 
 def lista_tabular(l, sugerencias = None):
+    """
+    lista_tabular: Muestra las Playlist en diferentes formato
+
+    Parameters
+    ----------
+    l
+        PlayList
+    sugerencias, optional
+        En dependencia del sugerencia se muestra la playlist de diferentes maneras
+    """
     if sugerencias == 0:
         l = list(enumerate(l, start=1))
         print(tabulate(l, headers=['Número', 'Nombre PlayList - Cantidad de canciones']))

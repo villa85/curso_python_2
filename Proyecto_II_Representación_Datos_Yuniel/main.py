@@ -10,17 +10,17 @@ if __name__ == '__main__':
     while opcion.lower() != "fin":
         opcion = input("Escriba la opción deseada o fin para salir: ")
         print("\n")
-        if opcion == "1":
+        if opcion == "1": # Crea la extrutura de Base Datos
             f.extrutura_BD()
             e.opciones(opcion)
-        elif opcion == "2":
+        elif opcion == "2": # Crea el archivo Json que luego se debe importar
             f.crear_json_canciones()
             e.opciones(opcion)
-        elif opcion == "3":
+        elif opcion == "3": # Crea usuario
             l = f.valida_user()
             f.crear_user(l[0],l[1],l[2],l[3])
             e.opciones(opcion)
-        elif opcion == "4":
+        elif opcion == "4": # Carga inicial de datos, creacion del usuario Admin y 3 PlayList de 5 canciones cada una
             if "user" not in locals() and 'hr' not in locals() and 'sr' not in locals() and 'rs' not in locals():
                 user = f.crear_user("Yuniel", "Villalón", "admin", "villalo2511@gmail.com", notification=False)
                 hr = f.PlayList("Hard Rock", "admin", f.lista_canciones(cant = 5))
@@ -34,32 +34,33 @@ if __name__ == '__main__':
             else:
                 print("La carga incial de datos ya a sido realizada")
                 print("\n")
-        elif opcion == "5":
+            e.opciones(opcion)
+        elif opcion == "5": # Muestra sugerencia de 20 canciones
             twenty_random_songs = f.lista_canciones()
             s = f.PlayList("PlayListGeneral", "admin", twenty_random_songs)
             s.mostrar_sugerencias()
             e.opciones(opcion)
-        elif opcion == "6":
+        elif opcion == "6": # Crea PlayList de las sugerencias recomendadas
             if 'twenty_random_songs' not in locals():
                 print("Error, Antes debes mostrar las sugerencias de canciones (Paso 5)")
                 print("\n")
             else:
                 f.valida_playlist(twenty_random_songs)
                 e.opciones(opcion)
-        elif opcion == "7":
+        elif opcion == "7": # Cosultar las PlayList de un Usuario
             i = f.valida_user_consultar_playlists()
             s = f.PlayList("PlayListGeneral", i, [])
             songs_list_playlist = s.consultar_playlists()
             e.lista_tabular(songs_list_playlist[0], 0)
             e.opciones(opcion)
-        elif opcion == "8":
+        elif opcion == "8": # Muestra las canciones de la PlayList Seleccionada
             if 'songs_list_playlist' not in locals():
                 print("Error, Antes debes Consultar las PlaysList (Paso 7)")
                 print("\n")
             else:
                 f.get_playlist(songs_list_playlist[1])
                 e.opciones(opcion)
-        elif opcion == "9":
+        elif opcion == "9": # Muestra la PlayList (Nombre de la PlayList y genero de cada canción)
             if 'songs_list_playlist' not in locals():
                 print("Error, Antes debes Consultar las PlaysList (Paso 7)")
                 print("\n")
