@@ -42,6 +42,7 @@ def extrutura_BD():
     if "canciones" not in l:
         db.create_collection("canciones")
         print("Colección usuario creado con exito")
+        print("\n")
     else:
         print("La colección canciones ya existe")
         print("\n")
