@@ -1,0 +1,13 @@
+year,month,day,dow,hour,minute,second,ip,url,response,refer
+2021,1,28,6,11,36,0,127.0.0.1,www.examendeped.com,200,www.examendeped.com\paginas
+2021,1,28,5,11,37,0,192.168.1.0,www.examendeped.com,200,www.examendeped.com\paginas2
+2021,1,28,5,11,38,0,192.168.1.1,www.examendeped.com,200,www.examendeped.com\paginas2
+2021,1,28,5,11,36,0,127.0.0.1,www.examendeped.com,404,www.examendeped.com\paginas2
+2021,1,28,6,11,37,0,192.168.1.0,www.examendeped.com,404,www.ped.com\paginas2
+2021,1,28,5,11,38,0,192.168.1.1,www.examendeped.com,404,www.examendeped.com\paginas2
+2021,1,28,2,11,36,0,127.0.0.1,www.examendeped.com,200,www.examendeped.com\paginas2
+2021,1,28,5,11,37,0,192.168.1.0,www.examendeped.com,200,www.examendeped.com\paginas2
+2021,3,28,5,11,38,0,127.168.1.1,www.examen.com,200,www.examendeped.com\paginas2
+2021,1,28,5,11,36,0,127.0.0.1,www.examendeped.com,404,www.examendeped.com\paginas
+2021,1,28,6,11,37,0,192.168.1.0,www.examendeped.com,404,www.examendeped.com\paginas
+2021,1,28,5,11,38,0,192.168.1.1,www.examendeped.com,404,www.examendeped.com\paginas2
