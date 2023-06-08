@@ -1,0 +1,25 @@
+1. Desactivar el entorno de Anaconda
+
+source deactivate base
+conda deactivate base
+conda.bat deactivate
+
+
+2. Crear un entorno virtual con otra versión de python (manual)
+
+1. Debes tener instalado la versión de python en tu ordenador
+2. Instalar virtualenv
+4. python3.9 -m virtualenv MyEnv
+C:\Users\msierra\AppData\Local\Programs\Python\Python39\python -m virtualenv C:\...\MyEnv
+5. activar el entorno virtual en C:\...\MyEnv
+
+
+Desde C:\Users\msierra\Desktop\ProyectoENV39
+virtualenv -p C:\Users\msierra\AppData\Local\Programs\Python\Python39\python.exe MyEnv399
+
+Pyinstaller -> generar ejecutables multiplataforma
+
+PyInstaller admite la creación de ejecutables para Windows, Linux y macOS, pero no puede compilar de forma cruzada.
+Por lo tanto, no puede crear un ejecutable dirigido a un sistema operativo desde otro sistema operativo.
+
+https://realpython.com/pyinstaller-python/
