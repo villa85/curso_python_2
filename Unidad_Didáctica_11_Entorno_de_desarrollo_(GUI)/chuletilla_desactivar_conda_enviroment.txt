@@ -23,3 +23,17 @@ PyInstaller admite la creación de ejecutables para Windows, Linux y macOS, pero
 Por lo tanto, no puede crear un ejecutable dirigido a un sistema operativo desde otro sistema operativo.
 
 https://realpython.com/pyinstaller-python/
+
+
+
+1- Crear Enviroment 
+
+py -m venv nombre_enviroment
+
+2 - Activar enviroment
+
+nos colocamos dentro de la carpeta Scripts con comando (cd), ejecutamos el siguiente codigo
+
+activate.bat
+
+
