@@ -5,6 +5,7 @@
 #Importar modulos propios
 from cargar_datos import cargar_datos_bbdd as bd
 from procesar_mensajes import procesar_mensaje_metacritic as meta
+from procesar_mensajes import procesar_mensajes_playstore as play
 
 # Programa principal
 conexion = bd.conexion_bd("bbdd/video_juegos.db")
@@ -31,3 +32,4 @@ conexion = bd.conexion_bd("bbdd/video_juegos.db")
 
 # meta.cargar_video_juegos(conexion)
 # meta.cargar_comentario_metacritic(conexion, "The Legend of Zelda: Ocarina of Time", "Nintendo64")
+# play.cargar_comentario_playstore(conexion)
