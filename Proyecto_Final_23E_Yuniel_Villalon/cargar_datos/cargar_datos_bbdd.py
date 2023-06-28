@@ -5,7 +5,7 @@ import sqlite3
 from sqlite3 import Error
 from datetime import datetime
 
-FORMATO = "%d-%m-%y %H:%M:%S"
+FORMATO = "%Y-%m-%d"
 FORMATO2 = "%Y"
 hoy = datetime.today()
 FECHA_P = hoy.strftime(FORMATO)

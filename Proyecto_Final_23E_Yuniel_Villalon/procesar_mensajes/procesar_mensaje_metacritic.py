@@ -27,7 +27,6 @@ def cargar_comentario_metacritic(conexion, juego, plataformma):
         id_juego = bd.insert_game(conexion, juego, plataformma)
 
     for fila in df_cometarios.itertuples():
-        # print(type(fila.UserName))
         nick_name = str(fila.UserName)
         id_usuario = bd.find_user(conexion, nick_name)
         if id_usuario is None:

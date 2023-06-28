@@ -6,6 +6,7 @@
 from cargar_datos import cargar_datos_bbdd as bd
 from procesar_mensajes import procesar_mensaje_metacritic as meta
 from procesar_mensajes import procesar_mensajes_playstore as play
+from obtener_datos import consultar_datos as cd
 
 # Programa principal
 conexion = bd.conexion_bd("bbdd/video_juegos.db")
@@ -30,6 +31,9 @@ conexion = bd.conexion_bd("bbdd/video_juegos.db")
 # id_user = bd.find_user(conexion, "Burtq.")
 # print(f"Usuario: {id_user}")
 
-# meta.cargar_video_juegos(conexion)
-# meta.cargar_comentario_metacritic(conexion, "The Legend of Zelda: Ocarina of Time", "Nintendo64")
-# play.cargar_comentario_playstore(conexion)
+# meta.cargar_video_juegos(conexion) # 1
+# play.cargar_comentario_playstore(conexion) # 2
+# meta.cargar_comentario_metacritic(conexion, "The Legend of Zelda: Ocarina of Time", "Nintendo64") # 3
+cd.consultar_comentarios_fecha(conexion, "Zelda", "2020-06-28", "2023-06-29")
+cd.consultar_comentarios_cantidad(conexion, "Zelda")
+
