@@ -34,6 +34,7 @@ conexion = bd.conexion_bd("bbdd/video_juegos.db")
 # meta.cargar_video_juegos(conexion) # 1
 # play.cargar_comentario_playstore(conexion) # 2
 # meta.cargar_comentario_metacritic(conexion, "The Legend of Zelda: Ocarina of Time", "Nintendo64") # 3
-cd.consultar_comentarios_fecha(conexion, "Zelda", "2020-06-28", "2023-06-29")
-cd.consultar_comentarios_cantidad(conexion, "Zelda")
+# cd.consultar_comentarios_fecha(conexion, "Zelda", "2020-06-28", "2023-06-29")
+# cd.consultar_comentarios_cantidad(conexion, "Zelda")
+cd.consultar_media_mensajes(conexion, "2023-06-28", "2023-06-29")
 

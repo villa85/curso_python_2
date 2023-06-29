@@ -23,3 +23,15 @@ def consultar_comentarios_cantidad(conexion, p_clave):
 
         df = pd.read_sql_query(query, conexion)
         print(df)
+
+def consultar_media_mensajes(conexion, f_ini, f_fin):
+        query = "SELECT (red_social.nom_red_social) as Red_Social, avg(mensaje.text_mensaje) as Media " \
+                "FROM mensaje " \
+                "INNER JOIN red_social ON red_social.id_red_social = mensaje.id_red_social " \
+                "WHERE f_mensaje >= DATE('{}') " \
+                "AND f_mensaje <= DATE('{}') " \
+                "GROUP BY mensaje.id_red_social " \
+                "ORDER BY Media DESC".format(f_ini, f_fin)
+
+        df = pd.read_sql_query(query, conexion)
+        print(df)
