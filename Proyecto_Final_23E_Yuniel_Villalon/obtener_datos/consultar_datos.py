@@ -1,7 +1,6 @@
 import pandas as pd
 import seaborn as sb
 import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
 
 
 def consultar_comentarios_fecha(conexion, p_clave, f_ini, f_fin):
@@ -44,5 +43,14 @@ def consultar_media_mensajes(conexion, f_ini, f_fin):
         fontsize='small',
         frameon=False
         )
-        plt.title("Media de Mensaje Diarios.", size=18)
-        # print(ax)
+        plt.title("Media de Mensajes Diarios.", size=18)
+
+def stadisticas_mensaje(conexion, word):
+        query= "SELECT (red_social.nom_red_social) as Red_Social, count(mensaje.text_mensaje) as Cantidad " \
+                "FROM mensaje " \
+                "INNER JOIN red_social ON red_social.id_red_social = mensaje.id_red_social " \
+                "WHERE mensaje.text_mensaje like '%{}%' " \
+                "GROUP BY red_social.nom_red_social".format(word)
+
+        df= pd.read_sql_query(query, conexion)
+        print(df)

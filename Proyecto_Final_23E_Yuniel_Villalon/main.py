@@ -37,4 +37,5 @@ conexion = bd.conexion_bd("bbdd/video_juegos.db")
 # cd.consultar_comentarios_fecha(conexion, "Zelda", "2020-06-28", "2023-06-29")
 # cd.consultar_comentarios_cantidad(conexion, "Zelda")
 # cd.consultar_media_mensajes(conexion, "2023-06-28", "2023-06-29")
+cd.stadisticas_mensaje(conexion, "zelda")
 
