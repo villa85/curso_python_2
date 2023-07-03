@@ -1,4 +1,5 @@
 import pandas  as pd
+import seaborn as sb
 
 def consultar_comentarios_fecha(conexion, p_clave, f_ini, f_fin):
         query = "SELECT nick_usuario " \
@@ -34,4 +35,5 @@ def consultar_media_mensajes(conexion, f_ini, f_fin):
                 "ORDER BY Media DESC".format(f_ini, f_fin)
 
         df = pd.read_sql_query(query, conexion)
-        print(df)
+        ax = sb.catplot(x = "Red_Social", y="Media", data=df, kind="bar")
+        print(ax)
