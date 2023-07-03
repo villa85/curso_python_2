@@ -1,5 +1,8 @@
-import pandas  as pd
+import pandas as pd
 import seaborn as sb
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
 
 def consultar_comentarios_fecha(conexion, p_clave, f_ini, f_fin):
         query = "SELECT nick_usuario " \
@@ -36,4 +39,10 @@ def consultar_media_mensajes(conexion, f_ini, f_fin):
 
         df = pd.read_sql_query(query, conexion)
         ax = sb.catplot(x = "Red_Social", y="Media", data=df, kind="bar")
-        print(ax)
+        plt.legend(
+        loc='best',
+        fontsize='small',
+        frameon=False
+        )
+        plt.title("Media de Mensaje Diarios.", size=18)
+        # print(ax)
