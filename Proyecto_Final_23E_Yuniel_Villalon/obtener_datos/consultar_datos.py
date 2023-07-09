@@ -25,25 +25,36 @@ def consultar_comentarios_cantidad(conexion, p_clave):
                 "ORDER BY cantidad DESC".format(p_clave)
 
         df = pd.read_sql_query(query, conexion)
-        print(df)
+        if not df.empty:
+                print(df)
+                return df
+        else:
+                return("Error: No hubo coincidencia con tu búsqueda")
 
 def consultar_media_mensajes(conexion, f_ini, f_fin):
-        query = "SELECT (red_social.nom_red_social) as Red_Social, avg(mensaje.text_mensaje) as Media " \
+        query = "SELECT red_social.nom_red_social, mensaje.f_mensaje " \
                 "FROM mensaje " \
                 "INNER JOIN red_social ON red_social.id_red_social = mensaje.id_red_social " \
                 "WHERE f_mensaje >= DATE('{}') " \
-                "AND f_mensaje <= DATE('{}') " \
-                "GROUP BY mensaje.id_red_social " \
-                "ORDER BY Media DESC".format(f_ini, f_fin)
+                "AND f_mensaje <= DATE('{}') ".format(f_ini, f_fin)
 
         df = pd.read_sql_query(query, conexion)
-        ax = sb.catplot(x = "Red_Social", y="Media", data=df, kind="bar")
-        plt.legend(
-        loc='best',
-        fontsize='small',
-        frameon=False
-        )
-        plt.title("Media de Mensajes Diarios.", size=18)
+        if not df.empty:
+                df["f_mensaje"] = pd.to_datetime(df["f_mensaje"])
+                df["dia"] = df["f_mensaje"].dt.date
+                df = df.loc[:, ["nom_red_social", "dia"]]
+                m_dia = df.groupby(["nom_red_social", "dia"])["dia"].count().reset_index(name='Mensajes')
+                total_mensajes = m_dia["Mensajes"].sum()
+                m_dia['media_mensajes'] = m_dia['Mensajes']/total_mensajes
+                print(m_dia)
+                m_dia.plot(x='dia', y="media_mensajes", kind='bar', figsize=(12, 8))
+                plt.xticks(rotation=30)
+                plt.xlabel('Días')
+                plt.ylabel('Porcentaje')
+                plt.title('Media de mensajes por día', size=18)
+                plt.show()
+        else:
+                return("Error: No hubo coincidencia con tu búsqueda")
 
 def stadisticas_mensaje(conexion, word):
         query= "SELECT (red_social.nom_red_social) as Red_Social, count(mensaje.text_mensaje) as Cantidad " \
@@ -53,4 +64,7 @@ def stadisticas_mensaje(conexion, word):
                 "GROUP BY red_social.nom_red_social".format(word)
 
         df= pd.read_sql_query(query, conexion)
-        print(df)
+        if not df.empty:
+                print(df)
+        else:
+                return("Error: No hubo coincidencia con tu búsqueda")
