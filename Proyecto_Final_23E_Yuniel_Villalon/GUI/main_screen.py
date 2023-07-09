@@ -45,7 +45,7 @@ class Windows:
         self.etiqueta_opc3 = Label(principal, text="3. Consulta de mensajes promedio por día", font=('Arial 12')).place(x=40, y=120)
         self.etiqueta_opc4 = Label(principal, text="4. Consulta de comentarios de un tema por red social", font=('Arial 12')).place(x=40, y=150)
 
-        # self.etiqueta_select = 
+        # self.etiqueta_select =
 
 if __name__ == '__main__':
     v_principal = Tk()
