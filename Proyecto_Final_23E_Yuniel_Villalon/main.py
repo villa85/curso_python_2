@@ -1,5 +1,6 @@
 # Proyecto Final 23E Yuniel Antonio Villalón Rosales
 from tkinter import *
+from tkinter import messagebox
 # Importar Librerias
 
 #Importar modulos propios
@@ -15,6 +16,7 @@ v_principal.title("Proyecto Final Yuniel Villalón")
 v_principal.geometry(newGeometry='600x400')
 v_principal.resizable(0, 0)
 v_principal.iconbitmap('GUI\idea.ico')
+# messagebox.showinfo('Información', 'Antes de hacer cualquier consulta, !!Asegurese de haber hecho la Cargar Inicial de datos')
 menubar = Menu(v_principal)
 
 file = Menu(menubar, tearoff=0)
@@ -24,5 +26,6 @@ file.add_command(label='Borrar Datos', command=lambda :fun.eliminar_datos(conexi
 file.add_separator()
 file.add_command(label='Salir', command=v_principal.destroy)
 v_principal.config(menu=menubar)
+messagebox.showinfo('Información', 'Antes de hacer cualquier consulta, !!Asegurese de haber hecho la Cargar Inicial de datos')
 VPrincipal = gu.Windows(v_principal)
 v_principal.mainloop()
