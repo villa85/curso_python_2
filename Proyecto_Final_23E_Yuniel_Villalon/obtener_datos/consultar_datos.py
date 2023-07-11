@@ -1,10 +1,21 @@
 import pandas as pd
-import seaborn as sb
 import matplotlib.pyplot as plt
+from tkinter import *
+from tkinter import messagebox
+import sqlite3
+
+def busca_fecha_menor_mensaje():
+        conexion = sqlite3.connect('bbdd/video_juegos.db')
+        cursor = conexion.cursor()
+        cursor.execute("SELECT MIN(f_mensaje) AS fecha_menor FROM mensaje")
+        query = cursor.fetchone()
+        fecha = query[0]
+        conexion.close()
+        return fecha
 
 
 def consultar_comentarios_fecha(conexion, p_clave, f_ini, f_fin):
-        query = "SELECT nick_usuario " \
+        query = "SELECT nick_usuario as Usuario " \
                 "FROM usuario " \
                 "WHERE id_usuario in " \
                 "(SELECT id_usuario " \
@@ -14,7 +25,12 @@ def consultar_comentarios_fecha(conexion, p_clave, f_ini, f_fin):
                 "AND f_mensaje <= DATE('{}')) ".format(p_clave, f_ini, f_fin)
 
         df = pd.read_sql_query(query, conexion)
-        print(df)
+        if not df.empty:
+                print(df)
+                return df
+        else:
+                messagebox.showerror("Error","No hay datos para mostrar. Primero cargar la Base de Datos")
+                return("Error: No hubo coincidencia con tu búsqueda")
 
 def consultar_comentarios_cantidad(conexion, p_clave):
         query = "SELECT usuario.nick_usuario, count(mensaje.text_mensaje) as cantidad " \
@@ -26,9 +42,9 @@ def consultar_comentarios_cantidad(conexion, p_clave):
 
         df = pd.read_sql_query(query, conexion)
         if not df.empty:
-                print(df)
                 return df
         else:
+                messagebox.showerror("Error","No hay datos para mostrar. Primero cargar la Base de Datos")
                 return("Error: No hubo coincidencia con tu búsqueda")
 
 def consultar_media_mensajes(conexion, f_ini, f_fin):
@@ -54,6 +70,7 @@ def consultar_media_mensajes(conexion, f_ini, f_fin):
                 plt.title('Media de mensajes por día', size=18)
                 plt.show()
         else:
+                messagebox.showerror("Error","No hay datos para mostrar. Primero cargar la Base de Datos")
                 return("Error: No hubo coincidencia con tu búsqueda")
 
 def stadisticas_mensaje(conexion, word):
@@ -65,6 +82,7 @@ def stadisticas_mensaje(conexion, word):
 
         df= pd.read_sql_query(query, conexion)
         if not df.empty:
-                print(df)
+                return df
         else:
+                messagebox.showerror("Error","No hay datos para mostrar. Primero cargar la Base de Datos")
                 return("Error: No hubo coincidencia con tu búsqueda")

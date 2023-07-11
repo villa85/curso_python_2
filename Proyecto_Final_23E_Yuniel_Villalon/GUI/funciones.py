@@ -1,5 +1,13 @@
+from tkinter import *
+from tkinter import messagebox
+
 from procesar_mensajes import procesar_mensaje_metacritic as meta
 from procesar_mensajes import procesar_mensajes_playstore as play
+
+
+def pregunta():
+    # Mensaje de Error
+    messagebox.showinfo("Juegos cargados con exito")
 
 def carga_datos_inicial(conexion):
     """
@@ -15,11 +23,12 @@ def carga_datos_inicial(conexion):
         meta.cargar_comentario_metacritic(conexion, "The Legend of Zelda: Ocarina of Time", "Nintendo64")
         meta.cargar_comentario_metacritic(conexion, "Super Mario 64", "Nintendo64")
         meta.cargar_comentario_metacritic(conexion, "Minecraft", "PC")
-        meta.cargar_comentario_metacritic(conexion, "God of War", "PlayStation4")
         conexion.commit()
-        return "Juegos cargados con exito"
+        messagebox.showinfo('Información','Juegos cargados con exito')
     except Exception as error:
+        messagebox.showerror("ERROR","Lo sentimos algo ha ido realmente mal")
         print("Lo sentimos algo ha ido realmente mal", str(error))
+
 
 def eliminar_datos(conexion):
     """
@@ -38,5 +47,8 @@ def eliminar_datos(conexion):
         query = "DELETE FROM juegos"
         cursor.execute(query)
         conexion.commit()
+        messagebox.showinfo('Información','La Base de datos ha sido borrada con exito')
+        return "La Base de datos ha sido borrada con exito"
     except Exception as error:
+        messagebox.showerror("ERROR","Lo sentimos algo ha ido realmente mal")
         print("Lo sentimos algo ha ido realmente mal", str(error))
