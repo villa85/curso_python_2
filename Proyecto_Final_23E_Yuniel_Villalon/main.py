@@ -16,7 +16,6 @@ v_principal.title("Proyecto Final Yuniel Villalón")
 v_principal.geometry(newGeometry='600x400')
 v_principal.resizable(0, 0)
 v_principal.iconbitmap('GUI\idea.ico')
-# messagebox.showinfo('Información', 'Antes de hacer cualquier consulta, !!Asegurese de haber hecho la Cargar Inicial de datos')
 menubar = Menu(v_principal)
 
 file = Menu(menubar, tearoff=0)
